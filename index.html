@@ -19,6 +19,7 @@
     }
   }
   *{box-sizing:border-box}
+  [hidden]{display:none !important}
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
   header.top{max-width:1240px;margin:0 auto;padding:16px 16px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   header.top h1{font-size:1.35rem;margin:0;flex:1}
@@ -110,7 +111,7 @@
   .row.correct .fill{background:var(--ok)}
   .row.correct .mclabel, .row.correct .lbl{color:var(--ok);font-weight:700}
   .row.correct .count::after{content:" ✓";color:var(--ok)}
-  .blurred .row .track,.blurred .row .count,.blurred .row .lbl math-field{filter:blur(9px)}
+  .hidden-note{color:var(--muted);font-style:italic;margin:10px 0 0}
   .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
   .quick{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
   .quick .small{margin-right:4px}
@@ -832,13 +833,33 @@ function renderStage(){
   $("respCount").textContent = n + (n === 1 ? " response" : " responses");
 
   const hasCorrect = q.type === "mc" ? (q.correct !== null && q.correct !== undefined) : !!q.correct;
-  $("revealBtn").disabled = !hasCorrect;
+  $("revealBtn").disabled = !hasCorrect || T.hide;
   $("revealBtn").textContent = T.reveal ? "Hide correct" : "Show correct";
   $("hideBtn").textContent = T.hide ? "Show answers" : "Hide answers";
   $("openBtn").disabled = $("clearScreenBtn").disabled = !isLive;
   $("openBtn").textContent = isLive && !T.live.open ? "Reopen submissions" : "Close submissions";
   $("clearRespBtn").disabled = n === 0;
-  tally.classList.toggle("blurred", T.hide);
+  if (T.hide){
+    // Answers hidden: show the choices with no bars or counts, and no student answers at all.
+    if (q.type === "mc"){
+      (q.choices || []).forEach((c, i) => {
+        const lab = document.createElement("div");
+        lab.className = "mclabel";
+        const L = document.createElement("b"); L.textContent = LETTERS[i];
+        const t = document.createElement("span"); t.className = "rich"; rich(t, c);
+        lab.append(L, t);
+        const row = barRow(lab, 0, 1);
+        row.querySelector(".count").textContent = "";
+        tally.appendChild(row);
+      });
+    }
+    const p = document.createElement("p");
+    p.className = "hidden-note";
+    p.textContent = "Answers are hidden. Click Show answers to reveal the results.";
+    tally.appendChild(p);
+    renderQuick(q);
+    return;
+  }
 
   if (q.type === "mc"){
     const choices = q.choices || [];
@@ -908,7 +929,8 @@ function renderQuick(q){
   }
 }
 
-$("hideBtn").onclick = () => { T.hide = !T.hide; renderStage(); };
+T.hide = store.get("et_hide") === "1";
+$("hideBtn").onclick = () => { T.hide = !T.hide; store.set("et_hide", T.hide ? "1" : "0"); renderStage(); };
 $("revealBtn").onclick = () => { T.reveal = !T.reveal; renderStage(); };
 $("openBtn").onclick = () => {
   if (!T.live || !T.live.qid) return;

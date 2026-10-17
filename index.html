@@ -3,155 +3,363 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Exit Ticket Test</title>
+<title>Exit Ticket</title>
 <script defer src="https://cdn.jsdelivr.net/npm/mathlive"></script>
 <style>
   :root{
-    --bg:#f6f7f9; --card:#ffffff; --ink:#1d2433; --muted:#667085; --line:#d9dee7;
-    --accent:#2f6fde; --accent-ink:#ffffff; --ok:#1f8a4c; --err:#c0392b; --warn-bg:#fff6e0; --warn-line:#f0c75e;
-    --bar:#2f6fde; --bar-bg:#e8eef9;
+    --bg:#f5f6f8; --card:#ffffff; --ink:#1c2230; --muted:#667085; --line:#d9dee7; --soft:#eef1f6;
+    --accent:#2f6fde; --accent-ink:#ffffff; --ok:#1f8a4c; --ok-soft:#dcf3e5; --err:#c0392b;
+    --warn-bg:#fff6e0; --warn-line:#f0c75e; --bar:#2f6fde; --bar-bg:#e8eef9; --live:#d9363e;
   }
   @media (prefers-color-scheme: dark){
     :root{
-      --bg:#14171d; --card:#1d222b; --ink:#e7eaf0; --muted:#98a2b3; --line:#2e3542;
-      --accent:#5b8ff0; --accent-ink:#0d1117; --ok:#4cc27e; --err:#ff7b6b; --warn-bg:#2b2516; --warn-line:#8a6d1f;
-      --bar:#5b8ff0; --bar-bg:#262d3a;
+      --bg:#13161c; --card:#1c212a; --ink:#e7eaf0; --muted:#98a2b3; --line:#2e3542; --soft:#232a35;
+      --accent:#5b8ff0; --accent-ink:#0d1117; --ok:#4cc27e; --ok-soft:#1b3326; --err:#ff7b6b;
+      --warn-bg:#2b2516; --warn-line:#8a6d1f; --bar:#5b8ff0; --bar-bg:#262d3a; --live:#ff5c63;
     }
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-  header{padding:18px 16px 4px;max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px}
-  h1{font-size:1.4rem;margin:0}
-  .tag{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;background:var(--bar-bg);color:var(--accent);padding:2px 8px;border-radius:99px;vertical-align:middle}
-  main{max-width:760px;margin:0 auto;padding:8px 16px 40px}
+  header.top{max-width:1240px;margin:0 auto;padding:16px 16px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  header.top h1{font-size:1.35rem;margin:0;flex:1}
+  .bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  main{max-width:1240px;margin:0 auto;padding:8px 16px 48px}
+  body.is-student main, body.is-student header.top{max-width:760px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
-  .card h2{font-size:1rem;margin:0 0 4px;color:var(--muted);font-weight:600}
-  .card p{margin:0 0 12px}
+  .card h2{font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin:0 0 10px;color:var(--muted);font-weight:700}
   .warn{background:var(--warn-bg);border-color:var(--warn-line)}
-  button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px 16px}
+  .small{font-size:.85rem;color:var(--muted)}
+  .empty{color:var(--muted);font-style:italic;margin:6px 0}
+  code{background:var(--soft);padding:1px 5px;border-radius:4px}
+
+  button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 15px}
+  button:hover:not(:disabled){border-color:var(--accent)}
   button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
-  button:disabled{opacity:.45;cursor:not-allowed}
-  button.link{border:none;background:none;color:var(--accent);padding:0;text-decoration:underline}
-  .mc{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:12px}
-  .mc button{text-align:left;padding:12px 14px}
-  .mc button b{display:inline-block;width:1.6em}
-  .mc button.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
-  math-field{display:block;width:100%;font-size:1.5rem;border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin-bottom:12px;background:var(--card);color:var(--ink)}
+  button.danger{color:var(--err)}
+  button:disabled{opacity:.4;cursor:not-allowed}
+  button.link{border:none;background:none;color:var(--accent);padding:4px 0;text-decoration:underline}
+  button.sm{padding:5px 10px;font-size:.88rem}
+  button.icon{padding:5px 9px}
+  input[type=text],textarea,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+  textarea{resize:vertical}
+  label{display:block;font-weight:600;margin:12px 0 6px}
+  label .small{font-weight:400}
+
+  math-field{display:block;width:100%;font-size:1.5rem;border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--card);color:var(--ink)}
+  math-field.inline-math{display:inline-block;width:auto;font-size:inherit;border:none;padding:0 2px;background:transparent;vertical-align:middle}
+  math-field.inline-math::part(menu-toggle), math-field.inline-math::part(virtual-keyboard-toggle){display:none}
+  .rich{white-space:pre-wrap}
+  .prompt{font-size:1.3rem;margin:0 0 14px}
+
   .status{min-height:1.5em;margin:10px 0 0;color:var(--muted)}
   .status.ok{color:var(--ok);font-weight:600}
   .status.err{color:var(--err);font-weight:600}
-  .done .mc button,.done math-field{opacity:.5;pointer-events:none}
-  .row{display:grid;grid-template-columns:minmax(70px,auto) 1fr 3em;align-items:center;gap:10px;margin:6px 0}
-  .track{background:var(--bar-bg);border-radius:6px;height:26px;overflow:hidden}
+
+  /* student */
+  .waiting{text-align:center;color:var(--muted);padding:40px 10px;font-size:1.1rem}
+  .mc{display:grid;gap:8px;margin-bottom:14px}
+  .mc button{text-align:left;padding:12px 14px;display:flex;gap:10px;align-items:center}
+  .mc button b{flex:0 0 1.6em}
+  .mc button.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+  #sMathWrap{margin-bottom:14px}
+  .locked .mc button, .locked #sMath{opacity:.5;pointer-events:none}
+
+  /* teacher layout */
+  .tgrid{display:grid;grid-template-columns:minmax(300px,390px) 1fr;gap:16px;align-items:start}
+  @media (max-width:900px){.tgrid{grid-template-columns:1fr}}
+  body.present #side, body.present #whoami, body.present #signOutBtn{display:none}
+  body.present .tgrid{grid-template-columns:1fr}
+  body.present .prompt{font-size:2rem}
+  body.present .row{font-size:1.3rem}
+  .rowflex{display:flex;gap:8px;align-items:center;margin:8px 0}
+  .rowflex select{flex:1}
+
+  .qlist{list-style:none;padding:0;margin:12px 0}
+  .qitem{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0}
+  .qitem.is-view{border-color:var(--accent)}
+  .qitem.is-live{box-shadow:0 0 0 2px var(--live) inset;border-color:var(--live)}
+  .qhead{display:flex;gap:8px;align-items:center;font-size:.8rem;color:var(--muted)}
+  .qnum{font-weight:700;color:var(--ink)}
+  .qtype{background:var(--soft);border-radius:99px;padding:1px 8px}
+  .livetag{display:none;color:var(--live);font-weight:700}
+  .qitem.is-live .livetag{display:inline}
+  .qtext{margin:4px 0 8px;max-height:4.6em;overflow:hidden}
+  .qactions{display:flex;gap:6px;flex-wrap:wrap}
+
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .seg button{border:none;border-radius:0;padding:7px 14px}
+  .seg button.on{background:var(--accent);color:var(--accent-ink);font-weight:600}
+  .preview{background:var(--soft);border-radius:8px;padding:8px 10px;margin-top:6px;min-height:2.4em;font-size:1.05rem}
+  .preview:empty::before{content:"Preview appears here";color:var(--muted);font-style:italic;font-size:.9rem}
+  .choicerow{display:flex;gap:6px;align-items:center;margin:6px 0}
+  .choicerow .letter{font-weight:700;width:1.2em}
+  .choicerow .mark{color:var(--muted)}
+  .choicerow.correct .mark{background:var(--ok);border-color:var(--ok);color:#fff}
+
+  /* stage */
+  .stagehead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .badge{font-size:.8rem;font-weight:700;letter-spacing:.05em;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--muted)}
+  .badge.live{background:var(--live);color:#fff}
+  .badge.closed{background:var(--soft);color:var(--ink)}
+  .count-big{margin-left:auto;font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
+  .row{display:grid;grid-template-columns:minmax(120px,1.1fr) 2fr 3.2em;align-items:center;gap:12px;margin:8px 0}
+  .mclabel{display:flex;gap:8px;align-items:center;min-width:0}
+  .track{background:var(--bar-bg);border-radius:6px;height:28px;overflow:hidden}
   .fill{background:var(--bar);height:100%;width:0;transition:width .35s ease}
-  .count{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
-  .row math-field{font-size:1.15rem;border:none;padding:0;margin:0;background:transparent}
-  .total{color:var(--muted);font-size:.9rem;margin-top:8px}
-  .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
-  .toolbar span{color:var(--muted);font-size:.9rem}
-  .hidden-answers .row .track,.hidden-answers .row .count,.hidden-answers .row math-field{filter:blur(8px)}
-  .empty{color:var(--muted);font-style:italic}
+  .count{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  .row.correct .fill{background:var(--ok)}
+  .row.correct .mclabel, .row.correct .lbl{color:var(--ok);font-weight:700}
+  .row.correct .count::after{content:" ✓";color:var(--ok)}
+  .blurred .row .track,.blurred .row .count,.blurred .row .lbl math-field{filter:blur(9px)}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+  .quick{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+  .quick .small{margin-right:4px}
+  .quick math-field{flex:1;min-width:180px;font-size:1.2rem}
+
   details summary{cursor:pointer;font-weight:600}
   #netList{list-style:none;padding:0;margin:10px 0}
-  #netList li{padding:4px 0}
-  .small{font-size:.85rem;color:var(--muted)}
-  code{background:var(--bar-bg);padding:1px 5px;border-radius:4px}
 </style>
 </head>
 <body>
-<header><h1>Exit Ticket <span class="tag">test</span></h1></header>
+<header class="top">
+  <h1>Exit Ticket</h1>
+  <div id="teacherBar" class="bar" hidden>
+    <span id="whoami" class="small"></span>
+    <button id="presentBtn" class="sm">Present mode</button>
+    <button id="signOutBtn" class="sm">Sign out</button>
+  </div>
+</header>
+
 <main>
+  <section id="notice" class="card warn" hidden></section>
 
-  <section id="setupNotice" class="card warn" hidden>
-    <h2>Not connected yet</h2>
-    <p>Paste your Firebase config into this file (look for <code>firebaseConfig</code> near the bottom), then re-upload it. The connection check below still works without it.</p>
-  </section>
-
-  <section id="errorBox" class="card warn" hidden></section>
-
-  <!-- STUDENT VIEW -->
+  <!-- ===================== STUDENT VIEW ===================== -->
   <section id="student" hidden>
-    <div class="card" id="cardMc">
-      <h2>Question 1</h2>
-      <p>Solve: 2x + 3 = 11</p>
-      <div class="mc" id="mcButtons">
-        <button data-v="A"><b>A</b> x = 3</button>
-        <button data-v="B"><b>B</b> x = 4</button>
-        <button data-v="C"><b>C</b> x = 7</button>
-        <button data-v="D"><b>D</b> x = 8</button>
+    <div class="card" id="sCard">
+      <div id="sWaiting" class="waiting">Waiting for your teacher to send a question…</div>
+      <div id="sQuestion" hidden>
+        <div id="sPrompt" class="prompt rich"></div>
+        <div id="sChoices" class="mc"></div>
+        <div id="sMathWrap" hidden>
+          <math-field id="sMath" math-virtual-keyboard-policy="auto"></math-field>
+          <p class="small">Click the keyboard icon for √, ∞, fractions, and exponents.</p>
+        </div>
+        <button class="primary" id="sSubmit" disabled>Submit</button>
+        <p class="status" id="sStatus"></p>
       </div>
-      <button class="primary" id="mcSubmit" disabled>Submit</button>
-      <p class="status" id="mcStatus"></p>
-    </div>
-
-    <div class="card" id="cardMath">
-      <h2>Question 2</h2>
-      <p>Simplify √8. <span class="small">Tap the keyboard icon for √, ∞, fractions, and exponents.</span></p>
-      <math-field id="mf" math-virtual-keyboard-policy="auto"></math-field>
-      <button class="primary" id="mathSubmit">Submit</button>
-      <p class="status" id="mathStatus"></p>
     </div>
   </section>
 
-  <!-- TEACHER VIEW -->
+  <!-- ===================== TEACHER SIGN-IN ===================== -->
+  <section id="signin" class="card" hidden>
+    <h2>Teacher sign-in</h2>
+    <p>Sign in with the Google account listed in your database rules.</p>
+    <button class="primary" id="signInBtn">Sign in with Google</button>
+  </section>
+
+  <!-- ===================== TEACHER VIEW ===================== -->
   <section id="teacher" hidden>
-    <div class="card" id="tallyMc">
-      <h2>Question 1 — multiple choice</h2>
-      <div id="mcTally"></div>
-      <div class="total" id="mcTotal"></div>
-      <div class="toolbar">
-        <span>Quick-add for a student without a laptop:</span>
-        <button data-add="A">+A</button><button data-add="B">+B</button>
-        <button data-add="C">+C</button><button data-add="D">+D</button>
+    <div class="tgrid">
+      <aside id="side">
+        <div class="card">
+          <h2>Lesson</h2>
+          <div class="rowflex">
+            <select id="lessonSel" aria-label="Lesson"></select>
+            <button id="newLesson" class="sm">New</button>
+          </div>
+          <div class="rowflex">
+            <button id="renameLesson" class="sm">Rename</button>
+            <button id="deleteLesson" class="sm danger">Delete lesson</button>
+          </div>
+          <ol id="qList" class="qlist"></ol>
+          <button id="addQ" class="primary">+ Add question</button>
+        </div>
+
+        <div class="card" id="editor" hidden>
+          <h2 id="edTitle">New question</h2>
+          <div class="seg" id="edType">
+            <button data-type="mc">Multiple choice</button>
+            <button data-type="math">Math answer</button>
+          </div>
+          <label for="edPrompt">Question <span class="small">— put math between $ signs, like Simplify $\sqrt{8}$</span></label>
+          <textarea id="edPrompt" rows="3"></textarea>
+          <div id="edPreview" class="preview rich"></div>
+
+          <div id="edMc">
+            <label>Choices <span class="small">— click ✓ to mark the correct one (optional)</span></label>
+            <div id="edChoices"></div>
+            <button id="edAddChoice" class="link">+ Add choice</button>
+          </div>
+
+          <div id="edMath" hidden>
+            <label>Correct answer <span class="small">— optional; equivalent answers like √8 and 2√2 are grouped</span></label>
+            <math-field id="edCorrect" math-virtual-keyboard-policy="auto"></math-field>
+          </div>
+
+          <div class="rowflex" style="margin-top:14px">
+            <button id="edSave" class="primary">Save question</button>
+            <button id="edCancel">Cancel</button>
+          </div>
+        </div>
+      </aside>
+
+      <div id="stage">
+        <div class="card">
+          <div class="stagehead">
+            <span id="liveBadge" class="badge"></span>
+            <span id="respCount" class="count-big"></span>
+          </div>
+          <div id="tPrompt" class="prompt rich"></div>
+          <div id="tTally"></div>
+          <div id="stageTools">
+            <div class="toolbar">
+              <button id="hideBtn">Hide answers</button>
+              <button id="revealBtn">Show correct</button>
+              <button id="openBtn">Close submissions</button>
+              <button id="clearScreenBtn">Clear student screens</button>
+              <button id="clearRespBtn" class="danger">Clear responses</button>
+            </div>
+            <div class="quick" id="quick"></div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="card" id="tallyMath">
-      <h2>Question 2 — math answer</h2>
-      <div id="mathTally"></div>
-      <div class="total" id="mathTotal"></div>
-    </div>
-    <div class="toolbar">
-      <button id="toggleHide">Hide answers (for projector)</button>
-      <button id="clearAll">Clear all responses</button>
     </div>
   </section>
 
   <details class="card" id="netCheck">
     <summary>Connection check</summary>
-    <p class="small">Tests whether this network can reach everything the page needs. A school filter can sometimes fake a "pass", so a real submit going through is the final proof.</p>
+    <p class="small">Tests whether this network can reach what the page needs. A school filter can sometimes fake a pass, so a real submit going through is the final proof.</p>
     <ul id="netList"></ul>
-    <button id="rerun">Run again</button>
+    <button id="rerun" class="sm">Run check</button>
   </details>
-
 </main>
 
 <script type="module">
-/* ============================================================
-   STEP 3 OF SETUP: paste your Firebase config between the braces.
-   It looks like:  apiKey: "...", authDomain: "...", projectId: "...", ...
-   ============================================================ */
-const firebaseConfig = {
-apiKey: "AIzaSyD8rptbob3AF7VBS3nEU2KiOkvRhMauWfk",
-  authDomain: "exit-ticket-c984e.firebaseapp.com",
-  projectId: "exit-ticket-c984e",
-  storageBucket: "exit-ticket-c984e.firebasestorage.app",
-  messagingSenderId: "807031294465",
-  appId: "1:807031294465:web:c60959abfbca08cfbdce00"
-};
-
 const FB = "https://www.gstatic.com/firebasejs/10.12.2/";
 const isTeacher = new URLSearchParams(location.search).get("view") === "teacher";
-const configured = Object.keys(firebaseConfig).length > 0;
+const LETTERS = "ABCDEF";
 const $ = id => document.getElementById(id);
-let db, fs;
+let fs, au, db, auth;
 
-function showError(msg){
-  const box = $("errorBox");
-  box.hidden = false;
-  box.innerHTML = "<h2>Problem</h2><p></p>";
-  box.querySelector("p").textContent = msg;
-  $("netCheck").open = true;
+const store = {
+  get(k){ try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v){ try { localStorage.setItem(k, v); } catch {} }
+};
+
+function notice(msg, html){
+  const n = $("notice");
+  n.hidden = false;
+  n.innerHTML = "<h2>Heads up</h2><p></p>";
+  const p = n.querySelector("p");
+  if (html) p.innerHTML = msg; else p.textContent = msg;
 }
+function clearNotice(){ $("notice").hidden = true; }
+
+/* ---------- math display & answer matching ---------- */
+function mathEl(latex){
+  if (customElements.get("math-field")){
+    const m = document.createElement("math-field");
+    m.setAttribute("read-only", "");
+    m.className = "inline-math";
+    m.value = latex;
+    return m;
+  }
+  const c = document.createElement("code");
+  c.textContent = latex;
+  return c;
+}
+// Renders text with $...$ math segments.
+function rich(el, str){
+  el.textContent = "";
+  String(str || "").split(/\$([^$]+)\$/).forEach((part, i) => {
+    if (i % 2 === 0){ if (part) el.appendChild(document.createTextNode(part)); }
+    else el.appendChild(mathEl(part));
+  });
+}
+
+/*EVAL-START*/
+function normLatex(s){
+  return String(s)
+    .replace(/\\left|\\right/g, "")
+    .replace(/\\[dt]frac/g, "\\frac")
+    .replace(/\\[,;:! ]/g, "")
+    .replace(/\s+/g, "");
+}
+// Evaluates simple numeric LaTeX (fractions, roots, powers, pi). Returns null if not purely numeric.
+function latexToNumber(src){
+  let s = normLatex(src).replace(/\\cdot|\\times/g, "*").replace(/\\div/g, "/").replace(/^[a-zA-Z]=/, "");
+  let i = 0;
+  const peek = () => s[i];
+  const at = w => s.startsWith(w, i);
+  const expect = ch => { if (s[i] !== ch) throw 0; i++; };
+  const startsFactor = () => /[0-9.({]/.test(peek() || "") || at("\\sqrt") || at("\\frac") || at("\\pi");
+  function expr(){
+    let v = term();
+    while (peek() === "+" || peek() === "-"){ const op = s[i++]; const r = term(); v = op === "+" ? v + r : v - r; }
+    return v;
+  }
+  function term(){
+    let v = unary();
+    for (;;){
+      const c = peek();
+      if (c === "*" || c === "/"){ i++; const r = unary(); v = c === "*" ? v * r : v / r; }
+      else if (c !== undefined && startsFactor()) v *= power();
+      else return v;
+    }
+  }
+  function unary(){
+    if (peek() === "-"){ i++; return -unary(); }
+    if (peek() === "+"){ i++; return unary(); }
+    return power();
+  }
+  function power(){
+    const b = atom();
+    if (peek() === "^"){
+      i++;
+      let e;
+      if (peek() === "{") e = group();
+      else if (/[0-9]/.test(peek() || "")) e = Number(s[i++]);
+      else throw 0;
+      return Math.pow(b, e);
+    }
+    return b;
+  }
+  function group(){ expect("{"); const v = expr(); expect("}"); return v; }
+  function arg(){
+    if (peek() === "{") return group();
+    if (/[0-9]/.test(peek() || "")) return Number(s[i++]);
+    throw 0;
+  }
+  function atom(){
+    const c = peek();
+    if (c === "("){ i++; const v = expr(); expect(")"); return v; }
+    if (c === "{") return group();
+    if (at("\\frac")){ i += 5; const a = arg(); const b = arg(); return a / b; }
+    if (at("\\sqrt")){
+      i += 5;
+      let n = 2;
+      if (peek() === "["){ i++; n = expr(); expect("]"); }
+      const a = arg();
+      return n === 2 ? Math.sqrt(a) : Math.sign(a) * Math.pow(Math.abs(a), 1 / n);
+    }
+    if (at("\\pi")){ i += 3; return Math.PI; }
+    const m = /^(\d*\.\d+|\d+\.?)/.exec(s.slice(i));
+    if (m){ i += m[0].length; return parseFloat(m[0]); }
+    throw 0;
+  }
+  try {
+    if (!s) return null;
+    const v = expr();
+    if (i !== s.length || !isFinite(v)) return null;
+    return v;
+  } catch { return null; }
+}
+function answerKey(latex){
+  const n = latexToNumber(latex);
+  if (n !== null) return "n:" + (Math.abs(n) < 1e-12 ? 0 : Number(n.toPrecision(10)));
+  return "s:" + normLatex(latex).replace(/^[a-zA-Z]=/, "");
+}
+/*EVAL-END*/
 
 /* ---------- connection check ---------- */
 const checks = [
@@ -162,7 +370,7 @@ const checks = [
 async function probe(url){
   const c = new AbortController();
   const t = setTimeout(() => c.abort(), 6000);
-  try { await fetch(url, {mode:"no-cors", cache:"no-store", signal:c.signal}); return true; }
+  try { await fetch(url, { mode: "no-cors", cache: "no-store", signal: c.signal }); return true; }
   catch { return false; }
   finally { clearTimeout(t); }
 }
@@ -178,160 +386,559 @@ async function runNetCheck(){
     if (!ok) $("netCheck").open = true;
   }
   const li = document.createElement("li");
-  const mlOk = !!customElements.get("math-field");
-  li.textContent = (mlOk ? "✅ " : "❌ ") + "Math keyboard loaded on this page";
+  li.textContent = (customElements.get("math-field") ? "✅ " : "❌ ") + "Math keyboard loaded on this page";
   list.appendChild(li);
 }
 $("rerun").onclick = runNetCheck;
 
 /* ---------- startup ---------- */
 async function init(){
-  runNetCheck();
-  if (!configured){ $("setupNotice").hidden = false; $("netCheck").open = true; return; }
+  document.body.classList.add(isTeacher ? "is-teacher" : "is-student");
+  let cfg = null;
+  try { cfg = (await import("./firebase-config.js")).firebaseConfig; } catch {}
+  if (!cfg || !Object.keys(cfg).length){
+    notice("This page can't find its <code>firebase-config.js</code> file. Add it to your GitHub repo next to <code>index.html</code>.", true);
+    $("netCheck").open = true;
+    runNetCheck();
+    return;
+  }
   try {
     const app = await import(FB + "firebase-app.js");
     fs = await import(FB + "firebase-firestore.js");
-    db = fs.getFirestore(app.initializeApp(firebaseConfig));
-  } catch (e) {
-    showError("Couldn't load Firebase. The school filter may be blocking gstatic.com.");
+    const a = app.initializeApp(cfg);
+    db = fs.getFirestore(a);
+    if (isTeacher){ au = await import(FB + "firebase-auth.js"); auth = au.getAuth(a); }
+  } catch {
+    notice("Couldn't load Firebase. The school web filter may be blocking gstatic.com.");
+    $("netCheck").open = true;
+    runNetCheck();
     return;
   }
-  isTeacher ? startTeacher() : startStudent();
+  isTeacher ? startTeacherAuth() : startStudent();
+}
+const liveRef = () => fs.doc(db, "state", "live");
+
+/* ===================== STUDENT ===================== */
+function startStudent(){
+  $("student").hidden = false;
+  const S = { cur: null, choice: null, done: false };
+  const mf = $("sMath");
+
+  const setStatus = (msg, cls) => { const st = $("sStatus"); st.className = "status" + (cls ? " " + cls : ""); st.textContent = msg; };
+
+  function refresh(){
+    const q = S.cur;
+    if (!q) return;
+    const open = !!q.open;
+    $("sCard").classList.toggle("locked", S.done || !open);
+    $("sSubmit").disabled = S.done || !open || (q.type === "mc" && S.choice === null);
+    if (S.done){
+      const st = $("sStatus");
+      st.className = "status ok";
+      st.innerHTML = 'Got it ✓ &nbsp;<button class="link">Submit for a classmate</button>';
+      st.querySelector("button").onclick = () => { S.done = false; resetInputs(); setStatus(""); refresh(); };
+    } else if (!open){
+      setStatus("Submissions are closed.");
+    } else if ($("sStatus").textContent === "Submissions are closed."){
+      setStatus("");
+    }
+  }
+
+  function resetInputs(){
+    S.choice = null;
+    document.querySelectorAll("#sChoices button").forEach(b => b.classList.remove("sel"));
+    if (customElements.get("math-field")) mf.value = "";
+  }
+
+  function renderQuestion(){
+    const q = S.cur;
+    rich($("sPrompt"), q.prompt);
+    const box = $("sChoices");
+    box.innerHTML = "";
+    if (q.type === "mc"){
+      (q.choices || []).forEach((c, idx) => {
+        const b = document.createElement("button");
+        const L = document.createElement("b"); L.textContent = LETTERS[idx];
+        const t = document.createElement("span"); t.className = "rich"; rich(t, c);
+        b.append(L, t);
+        b.onclick = () => {
+          S.choice = idx;
+          box.querySelectorAll("button").forEach(x => x.classList.toggle("sel", x === b));
+          refresh();
+        };
+        box.appendChild(b);
+      });
+    }
+    box.hidden = q.type !== "mc";
+    $("sMathWrap").hidden = q.type !== "math";
+    resetInputs();
+    S.done = store.get("et_sub_" + q.qid) === "1";
+    setStatus("");
+    refresh();
+  }
+
+  fs.onSnapshot(liveRef(), snap => {
+    clearNotice();
+    const d = snap.exists() ? snap.data() : null;
+    if (!d || !d.qid){
+      S.cur = null;
+      $("sWaiting").hidden = false;
+      $("sQuestion").hidden = true;
+      return;
+    }
+    const prev = S.cur;
+    const changed = !prev || prev.qid !== d.qid || prev.type !== d.type || prev.prompt !== d.prompt ||
+                    JSON.stringify(prev.choices) !== JSON.stringify(d.choices);
+    S.cur = d;
+    $("sWaiting").hidden = true;
+    $("sQuestion").hidden = false;
+    if (changed) renderQuestion(); else refresh();
+  }, err => notice("Can't reach the question right now (" + err.code + "). Raise your hand."));
+
+  $("sSubmit").onclick = async () => {
+    const q = S.cur;
+    if (!q || !q.open || S.done) return;
+    let answer;
+    if (q.type === "mc"){
+      if (S.choice === null) return;
+      answer = LETTERS[S.choice];
+    } else {
+      answer = (customElements.get("math-field") ? mf.value : "").trim();
+      if (!answer){ setStatus("Type an answer first.", "err"); return; }
+    }
+    setStatus("Sending…");
+    $("sSubmit").disabled = true;
+    const qid = q.qid;
+    try {
+      await fs.addDoc(fs.collection(db, "responses"), { qid, answer, source: "student", at: fs.serverTimestamp() });
+      store.set("et_sub_" + qid, "1");
+      if (S.cur && S.cur.qid === qid){ S.done = true; refresh(); }
+    } catch (e){
+      setStatus(e.code === "permission-denied" ? "Submissions are closed." : "Didn't send. Raise your hand. (" + (e.code || e.message) + ")", "err");
+      refresh();
+    }
+  };
+
+  customElements.whenDefined("math-field").then(() => { if (S.cur) rich($("sPrompt"), S.cur.prompt); });
 }
 
-/* ---------- student view ---------- */
-async function send(q, answer, card, statusEl, reset){
-  statusEl.className = "status";
-  statusEl.textContent = "Sending…";
-  card.querySelectorAll("button.primary").forEach(b => b.disabled = true);
-  try {
-    await fs.addDoc(fs.collection(db, "responses"), {
-      q, answer, source: "student", at: fs.serverTimestamp()
-    });
-    card.classList.add("done");
-    statusEl.className = "status ok";
-    statusEl.innerHTML = 'Got it ✓ &nbsp;<button class="link">Submit for a classmate</button>';
-    statusEl.querySelector("button").onclick = () => {
-      card.classList.remove("done");
-      statusEl.textContent = "";
-      reset();
-    };
-  } catch (e) {
-    statusEl.className = "status err";
-    statusEl.textContent = "Didn't send. Raise your hand. (" + (e.code || e.message) + ")";
-    card.querySelectorAll("button.primary").forEach(b => b.disabled = false);
+/* ===================== TEACHER ===================== */
+const T = {
+  lessons: [], lessonId: null, live: null, viewQid: null, responses: [],
+  hide: false, reveal: false, unsubs: [], unsubResp: null, editing: null,
+  createdDefault: false, quickKey: null
+};
+
+function authMsg(e){
+  const c = e && e.code;
+  if (c === "auth/unauthorized-domain") return "Firebase doesn't recognize this website yet. In Firebase, go to Authentication → Settings → Authorized domains and add " + location.hostname + ".";
+  if (c === "auth/operation-not-allowed" || c === "auth/configuration-not-found") return "Google sign-in isn't turned on. In Firebase, go to Authentication → Sign-in method and enable Google.";
+  if (c === "auth/popup-blocked") return "The sign-in popup was blocked. Allow popups for this site and try again.";
+  if (c === "auth/popup-closed-by-user" || c === "auth/cancelled-popup-request") return "Sign-in was cancelled.";
+  return "Sign-in failed (" + (c || e.message) + ").";
+}
+function teacherErr(e){
+  if (e && e.code === "permission-denied"){
+    const who = auth && auth.currentUser ? auth.currentUser.email : "this account";
+    notice("You're signed in as " + who + ", but the database rules don't allow this account to manage questions. Check that the email in your Firestore rules matches, and that the rules are published.");
+  } else {
+    notice("Something went wrong (" + ((e && (e.code || e.message)) || "unknown") + ").");
   }
 }
 
-function startStudent(){
-  $("student").hidden = false;
-  let choice = null;
-  const mcBtns = [...document.querySelectorAll("#mcButtons button")];
-  const resetMc = () => { choice = null; mcBtns.forEach(b => b.classList.remove("sel")); $("mcSubmit").disabled = true; };
-  mcBtns.forEach(b => b.onclick = () => {
-    choice = b.dataset.v;
-    mcBtns.forEach(x => x.classList.toggle("sel", x === b));
-    $("mcSubmit").disabled = false;
-  });
-  $("mcSubmit").onclick = () => { if (choice) send("q1", choice, $("cardMc"), $("mcStatus"), resetMc); };
-
-  const mf = $("mf");
-  const resetMath = () => { mf.value = ""; $("mathSubmit").disabled = false; };
-  $("mathSubmit").onclick = () => {
-    const v = (mf.value || "").trim();
-    if (!v){ $("mathStatus").className = "status err"; $("mathStatus").textContent = "Type an answer first."; return; }
-    send("q2", v, $("cardMath"), $("mathStatus"), resetMath);
+function startTeacherAuth(){
+  $("signInBtn").onclick = async () => {
+    try { clearNotice(); await au.signInWithPopup(auth, new au.GoogleAuthProvider()); }
+    catch (e){ notice(authMsg(e)); }
   };
+  $("signOutBtn").onclick = () => au.signOut(auth);
+  au.onAuthStateChanged(auth, user => {
+    if (!user){
+      stopTeacher();
+      $("signin").hidden = false; $("teacher").hidden = true; $("teacherBar").hidden = true;
+      return;
+    }
+    $("signin").hidden = true; $("teacher").hidden = false; $("teacherBar").hidden = false;
+    $("whoami").textContent = user.email;
+    startTeacher();
+  });
 }
 
-/* ---------- teacher view ---------- */
-const norm = s => s.replace(/\\left|\\right/g, "").replace(/\s+/g, "");
+function stopTeacher(){
+  T.unsubs.forEach(u => u());
+  T.unsubs = [];
+  if (T.unsubResp){ T.unsubResp(); T.unsubResp = null; }
+}
 
+const curLesson = () => T.lessons.find(l => l.id === T.lessonId) || null;
+function findQ(qid){
+  for (const l of T.lessons){
+    const q = (l.questions || []).find(x => x.id === qid);
+    if (q) return q;
+  }
+  return null;
+}
+const rid = () => Math.random().toString(36).slice(2, 9) + Date.now().toString(36);
+const ms = t => (t && t.toMillis ? t.toMillis() : Date.now());
+
+function startTeacher(){
+  if (T.unsubs.length) return;
+  T.unsubs.push(fs.onSnapshot(fs.collection(db, "lessons"), snap => {
+    clearNotice();
+    T.lessons = snap.docs
+      .map(d => ({ id: d.id, ...d.data({ serverTimestamps: "estimate" }) }))
+      .sort((a, b) => ms(a.createdAt) - ms(b.createdAt));
+    if (!T.lessons.length && !T.createdDefault){ T.createdDefault = true; createLesson("Lesson 1"); return; }
+    if (!curLesson()){
+      const saved = store.get("et_lesson");
+      const pick = T.lessons.find(l => l.id === saved) || T.lessons[0];
+      T.lessonId = pick ? pick.id : null;
+    }
+    renderLessons();
+    renderStage();
+  }, teacherErr));
+
+  T.unsubs.push(fs.onSnapshot(liveRef(), snap => {
+    const prev = T.live && T.live.qid;
+    T.live = snap.exists() ? snap.data() : null;
+    const now = T.live && T.live.qid;
+    if (now && now !== prev) setView(now);
+    else { renderLessons(); renderStage(); }
+  }, teacherErr));
+}
+
+function setView(qid){
+  T.viewQid = qid; T.reveal = false; T.responses = [];
+  if (T.unsubResp){ T.unsubResp(); T.unsubResp = null; }
+  if (qid){
+    T.unsubResp = fs.onSnapshot(
+      fs.query(fs.collection(db, "responses"), fs.where("qid", "==", qid)),
+      snap => { T.responses = snap.docs.map(d => d.data()); renderStage(); },
+      teacherErr
+    );
+  }
+  renderLessons();
+  renderStage();
+}
+
+/* ----- lessons & question list ----- */
+function renderLessons(){
+  const sel = $("lessonSel");
+  sel.innerHTML = "";
+  T.lessons.forEach(l => {
+    const o = document.createElement("option");
+    o.value = l.id; o.textContent = l.name || "Untitled";
+    sel.appendChild(o);
+  });
+  sel.value = T.lessonId || "";
+  const lesson = curLesson();
+  $("renameLesson").disabled = $("deleteLesson").disabled = $("addQ").disabled = !lesson;
+  const list = $("qList");
+  list.innerHTML = "";
+  if (!lesson) return;
+  const qs = lesson.questions || [];
+  if (!qs.length) list.innerHTML = '<li class="empty">No questions yet. Add one below.</li>';
+  qs.forEach((q, i) => {
+    const li = document.createElement("li");
+    li.className = "qitem" + (T.live && T.live.qid === q.id ? " is-live" : "") + (T.viewQid === q.id ? " is-view" : "");
+    li.innerHTML =
+      '<div class="qhead"><span class="qnum"></span><span class="qtype"></span><span class="livetag">● LIVE</span></div>' +
+      '<div class="qtext rich"></div>' +
+      '<div class="qactions">' +
+        '<button class="primary sm" data-a="push">Push ▶</button>' +
+        '<button class="sm" data-a="results">Results</button>' +
+        '<button class="sm" data-a="edit">Edit</button>' +
+        '<button class="sm icon" data-a="up" title="Move up">↑</button>' +
+        '<button class="sm icon" data-a="down" title="Move down">↓</button>' +
+        '<button class="sm icon danger" data-a="del" title="Delete question">✕</button>' +
+      '</div>';
+    li.querySelector(".qnum").textContent = i + 1;
+    li.querySelector(".qtype").textContent = q.type === "mc" ? "Multiple choice" : "Math answer";
+    rich(li.querySelector(".qtext"), q.prompt);
+    li.querySelector('[data-a="up"]').disabled = i === 0;
+    li.querySelector('[data-a="down"]').disabled = i === qs.length - 1;
+    li.querySelectorAll("[data-a]").forEach(b => b.onclick = () => qAction(b.dataset.a, i));
+    list.appendChild(li);
+  });
+}
+
+function saveQuestions(lesson, qs){
+  return fs.updateDoc(fs.doc(db, "lessons", lesson.id), { questions: qs, updatedAt: fs.serverTimestamp() }).catch(teacherErr);
+}
+
+async function qAction(a, i){
+  const lesson = curLesson();
+  if (!lesson) return;
+  const qs = [...(lesson.questions || [])];
+  const q = qs[i];
+  if (a === "push") return pushQ(q);
+  if (a === "results") return setView(q.id);
+  if (a === "edit") return openEditor(i);
+  if (a === "up" && i > 0){ [qs[i - 1], qs[i]] = [qs[i], qs[i - 1]]; return saveQuestions(lesson, qs); }
+  if (a === "down" && i < qs.length - 1){ [qs[i + 1], qs[i]] = [qs[i], qs[i + 1]]; return saveQuestions(lesson, qs); }
+  if (a === "del"){
+    if (!confirm("Delete question " + (i + 1) + "? Its responses stay in the database until you clear them.")) return;
+    qs.splice(i, 1);
+    if (T.editing && T.editing.index === i) closeEditor();
+    return saveQuestions(lesson, qs);
+  }
+}
+
+function pushQ(q){
+  return fs.setDoc(liveRef(), {
+    qid: q.id, type: q.type, prompt: q.prompt,
+    choices: q.type === "mc" ? q.choices : [],
+    open: true, pushedAt: fs.serverTimestamp()
+  }).then(() => setView(q.id)).catch(teacherErr);
+}
+
+function createLesson(name){
+  return fs.addDoc(fs.collection(db, "lessons"), {
+    name, questions: [], createdAt: fs.serverTimestamp(), updatedAt: fs.serverTimestamp()
+  }).then(ref => { T.lessonId = ref.id; store.set("et_lesson", ref.id); renderLessons(); }).catch(teacherErr);
+}
+
+$("lessonSel").onchange = e => { T.lessonId = e.target.value; store.set("et_lesson", T.lessonId); closeEditor(); renderLessons(); };
+$("newLesson").onclick = () => {
+  const name = prompt("Name for the new lesson:", "");
+  if (name && name.trim()) createLesson(name.trim());
+};
+$("renameLesson").onclick = () => {
+  const l = curLesson(); if (!l) return;
+  const name = prompt("Rename lesson:", l.name || "");
+  if (name && name.trim()) fs.updateDoc(fs.doc(db, "lessons", l.id), { name: name.trim() }).catch(teacherErr);
+};
+$("deleteLesson").onclick = () => {
+  const l = curLesson(); if (!l) return;
+  if (!confirm('Delete the lesson "' + (l.name || "Untitled") + '" and all its questions?')) return;
+  closeEditor();
+  T.lessonId = null;
+  fs.deleteDoc(fs.doc(db, "lessons", l.id)).catch(teacherErr);
+};
+$("addQ").onclick = () => openEditor(-1);
+
+/* ----- question editor ----- */
+function setEdType(type){
+  T.editing.type = type;
+  document.querySelectorAll("#edType button").forEach(b => b.classList.toggle("on", b.dataset.type === type));
+  $("edMc").hidden = type !== "mc";
+  $("edMath").hidden = type !== "math";
+}
+document.querySelectorAll("#edType button").forEach(b => b.onclick = () => setEdType(b.dataset.type));
+
+function relabelChoices(){
+  const rows = [...$("edChoices").children];
+  rows.forEach((r, i) => r.querySelector(".letter").textContent = LETTERS[i]);
+  $("edAddChoice").hidden = rows.length >= LETTERS.length;
+}
+function addChoiceRow(text, isCorrect){
+  const box = $("edChoices");
+  if (box.children.length >= LETTERS.length) return;
+  const row = document.createElement("div");
+  row.className = "choicerow" + (isCorrect ? " correct" : "");
+  row.innerHTML = '<button class="mark sm" title="Mark as correct">✓</button><span class="letter"></span><input type="text" placeholder="Choice (math in $ $ works too)"><button class="sm icon" title="Remove choice">✕</button>';
+  row.querySelector("input").value = text || "";
+  const [mark, , , remove] = row.children;
+  mark.onclick = () => {
+    const was = row.classList.contains("correct");
+    [...box.children].forEach(r => r.classList.remove("correct"));
+    if (!was) row.classList.add("correct");
+  };
+  remove.onclick = () => { if (box.children.length > 2){ row.remove(); relabelChoices(); } };
+  box.appendChild(row);
+  relabelChoices();
+}
+$("edAddChoice").onclick = () => addChoiceRow("", false);
+$("edPrompt").oninput = () => rich($("edPreview"), $("edPrompt").value);
+
+function openEditor(index){
+  const lesson = curLesson(); if (!lesson) return;
+  const q = index >= 0 ? lesson.questions[index] : { type: "mc", prompt: "", choices: ["", "", "", ""], correct: null };
+  T.editing = { index, id: q.id || null, type: q.type };
+  $("editor").hidden = false;
+  $("edTitle").textContent = index >= 0 ? "Edit question " + (index + 1) : "New question";
+  $("edPrompt").value = q.prompt || "";
+  rich($("edPreview"), q.prompt || "");
+  setEdType(q.type);
+  $("edChoices").innerHTML = "";
+  const choices = q.type === "mc" && q.choices && q.choices.length ? q.choices : ["", "", "", ""];
+  choices.forEach((c, i) => addChoiceRow(c, q.type === "mc" && q.correct === i));
+  if (customElements.get("math-field")) $("edCorrect").value = q.type === "math" ? (q.correct || "") : "";
+  $("editor").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  $("edPrompt").focus();
+}
+function closeEditor(){ T.editing = null; $("editor").hidden = true; }
+$("edCancel").onclick = closeEditor;
+
+$("edSave").onclick = async () => {
+  const lesson = curLesson(); const E = T.editing;
+  if (!lesson || !E) return;
+  const promptText = $("edPrompt").value.trim();
+  if (!promptText){ alert("Type the question first."); return; }
+  const q = { id: E.id || rid(), type: E.type, prompt: promptText };
+  if (E.type === "mc"){
+    const rows = [...$("edChoices").children]
+      .map(r => ({ t: r.querySelector("input").value.trim(), c: r.classList.contains("correct") }))
+      .filter(r => r.t);
+    if (rows.length < 2){ alert("Add at least two choices."); return; }
+    q.choices = rows.map(r => r.t);
+    const ci = rows.findIndex(r => r.c);
+    q.correct = ci >= 0 ? ci : null;
+  } else {
+    q.choices = [];
+    q.correct = (customElements.get("math-field") ? $("edCorrect").value : "").trim();
+  }
+  const qs = [...(lesson.questions || [])];
+  if (E.index >= 0) qs[E.index] = q; else qs.push(q);
+  $("edSave").disabled = true;
+  await saveQuestions(lesson, qs);
+  if (T.live && T.live.qid === q.id){
+    await fs.setDoc(liveRef(), { type: q.type, prompt: q.prompt, choices: q.choices }, { merge: true }).catch(teacherErr);
+  }
+  $("edSave").disabled = false;
+  closeEditor();
+};
+
+/* ----- stage: live tally ----- */
 function barRow(labelNode, count, max){
   const row = document.createElement("div");
   row.className = "row";
-  const pct = max ? Math.round(count / max * 100) : 0;
   row.innerHTML = '<div class="lbl"></div><div class="track"><div class="fill"></div></div><div class="count"></div>';
   row.querySelector(".lbl").appendChild(labelNode);
   row.querySelector(".count").textContent = count;
-  requestAnimationFrame(() => row.querySelector(".fill").style.width = pct + "%");
+  const pct = max ? Math.round(count / max * 100) : 0;
+  requestAnimationFrame(() => { row.querySelector(".fill").style.width = pct + "%"; });
   return row;
 }
 
-function renderMc(counts, total){
-  const box = $("mcTally");
-  box.innerHTML = "";
-  const max = Math.max(1, ...Object.values(counts));
-  for (const k of ["A","B","C","D"]){
-    const b = document.createElement("b"); b.textContent = k;
-    box.appendChild(barRow(b, counts[k] || 0, max));
+function renderStage(){
+  const tally = $("tTally");
+  tally.innerHTML = "";
+  const isLive = !!(T.live && T.live.qid && T.live.qid === T.viewQid);
+  const q = (T.viewQid && findQ(T.viewQid)) || (isLive ? { ...T.live, id: T.live.qid, correct: null } : null);
+  const badge = $("liveBadge");
+  $("stageTools").hidden = !q;
+  if (!q){
+    badge.className = "badge"; badge.textContent = "";
+    $("tPrompt").textContent = ""; $("respCount").textContent = "";
+    tally.innerHTML = '<p class="empty">Push a question to your class and responses will show up here.</p>';
+    T.quickKey = null; $("quick").innerHTML = "";
+    return;
   }
-  $("mcTotal").textContent = total + (total === 1 ? " response" : " responses");
-}
+  badge.textContent = isLive ? (T.live.open ? "● LIVE" : "CLOSED") : "RESULTS";
+  badge.className = "badge " + (isLive ? (T.live.open ? "live" : "closed") : "");
+  rich($("tPrompt"), q.prompt);
+  const n = T.responses.length;
+  $("respCount").textContent = n + (n === 1 ? " response" : " responses");
 
-function renderMath(groups, total){
-  const box = $("mathTally");
-  box.innerHTML = "";
-  if (!groups.size){ box.innerHTML = '<p class="empty">No answers yet.</p>'; }
-  const sorted = [...groups.values()].sort((a,b) => b.count - a.count);
-  const max = sorted.length ? sorted[0].count : 1;
-  for (const g of sorted){
-    let label;
-    if (customElements.get("math-field")){
-      label = document.createElement("math-field");
-      label.setAttribute("read-only", "");
-      label.value = g.latex;
-    } else {
-      label = document.createElement("code");
-      label.textContent = g.latex;
-    }
-    box.appendChild(barRow(label, g.count, max));
-  }
-  $("mathTotal").textContent = total + (total === 1 ? " response" : " responses");
-}
+  const hasCorrect = q.type === "mc" ? (q.correct !== null && q.correct !== undefined) : !!q.correct;
+  $("revealBtn").disabled = !hasCorrect;
+  $("revealBtn").textContent = T.reveal ? "Hide correct" : "Show correct";
+  $("hideBtn").textContent = T.hide ? "Show answers" : "Hide answers";
+  $("openBtn").disabled = $("clearScreenBtn").disabled = !isLive;
+  $("openBtn").textContent = isLive && !T.live.open ? "Reopen submissions" : "Close submissions";
+  $("clearRespBtn").disabled = n === 0;
+  tally.classList.toggle("blurred", T.hide);
 
-function startTeacher(){
-  $("teacher").hidden = false;
-  fs.onSnapshot(fs.collection(db, "responses"), snap => {
-    const mc = {A:0,B:0,C:0,D:0};
-    const math = new Map();
-    let n1 = 0, n2 = 0;
-    snap.forEach(d => {
-      const r = d.data();
-      if (r.q === "q1"){ mc[r.answer] = (mc[r.answer] || 0) + 1; n1++; }
-      else if (r.q === "q2"){
-        const k = norm(r.answer);
-        const g = math.get(k) || {latex: r.answer, count: 0};
-        g.count++; math.set(k, g); n2++;
-      }
+  if (q.type === "mc"){
+    const choices = q.choices || [];
+    const counts = choices.map(() => 0);
+    T.responses.forEach(r => { const k = LETTERS.indexOf(r.answer); if (k >= 0 && k < counts.length) counts[k]++; });
+    const max = Math.max(1, ...counts);
+    choices.forEach((c, i) => {
+      const lab = document.createElement("div");
+      lab.className = "mclabel";
+      const L = document.createElement("b"); L.textContent = LETTERS[i];
+      const t = document.createElement("span"); t.className = "rich"; rich(t, c);
+      lab.append(L, t);
+      const row = barRow(lab, counts[i], max);
+      if (T.reveal && q.correct === i) row.classList.add("correct");
+      tally.appendChild(row);
     });
-    renderMc(mc, n1);
-    renderMath(math, n2);
-  }, err => showError("Lost connection to the database (" + err.code + ")."));
-
-  document.querySelectorAll("[data-add]").forEach(b => b.onclick = async () => {
-    b.disabled = true;
-    try {
-      await fs.addDoc(fs.collection(db, "responses"), {
-        q: "q1", answer: b.dataset.add, source: "teacher", at: fs.serverTimestamp()
-      });
-    } catch (e) { showError("Quick-add failed (" + (e.code || e.message) + ")."); }
-    b.disabled = false;
-  });
-
-  $("toggleHide").onclick = () => {
-    const hidden = $("teacher").classList.toggle("hidden-answers");
-    $("toggleHide").textContent = hidden ? "Show answers" : "Hide answers (for projector)";
-  };
-
-  $("clearAll").onclick = async () => {
-    if (!confirm("Delete every response?")) return;
-    const snap = await fs.getDocs(fs.collection(db, "responses"));
-    const batch = fs.writeBatch(db);
-    snap.forEach(d => batch.delete(d.ref));
-    await batch.commit();
-  };
+  } else {
+    const groups = new Map();
+    T.responses.forEach(r => {
+      const k = answerKey(r.answer);
+      const g = groups.get(k) || { latex: r.answer, count: 0 };
+      g.count++;
+      groups.set(k, g);
+    });
+    const ck = q.correct ? answerKey(q.correct) : null;
+    const sorted = [...groups.entries()].sort((a, b) => b[1].count - a[1].count);
+    if (!sorted.length) tally.innerHTML = '<p class="empty">No answers yet.</p>';
+    const max = sorted.length ? sorted[0][1].count : 1;
+    sorted.forEach(([k, g]) => {
+      const row = barRow(mathEl(g.latex), g.count, max);
+      if (T.reveal && ck === k) row.classList.add("correct");
+      tally.appendChild(row);
+    });
+  }
+  renderQuick(q);
 }
+
+function addQuick(answer){
+  if (!T.viewQid || !answer) return Promise.resolve();
+  return fs.addDoc(fs.collection(db, "responses"), { qid: T.viewQid, answer, source: "teacher", at: fs.serverTimestamp() }).catch(teacherErr);
+}
+function renderQuick(q){
+  const key = q.id + "|" + q.type + "|" + (q.choices || []).length;
+  if (T.quickKey === key) return;
+  T.quickKey = key;
+  const box = $("quick");
+  box.innerHTML = '<span class="small">Add an answer for a student without a laptop:</span>';
+  if (q.type === "mc"){
+    (q.choices || []).forEach((_, i) => {
+      const b = document.createElement("button");
+      b.className = "sm";
+      b.textContent = "+" + LETTERS[i];
+      b.onclick = async () => { b.disabled = true; await addQuick(LETTERS[i]); b.disabled = false; };
+      box.appendChild(b);
+    });
+  } else {
+    const m = document.createElement("math-field");
+    m.setAttribute("math-virtual-keyboard-policy", "auto");
+    const b = document.createElement("button");
+    b.className = "sm"; b.textContent = "Add";
+    b.onclick = async () => {
+      const v = (m.value || "").trim();
+      if (!v) return;
+      b.disabled = true; await addQuick(v); m.value = ""; b.disabled = false;
+    };
+    box.append(m, b);
+  }
+}
+
+$("hideBtn").onclick = () => { T.hide = !T.hide; renderStage(); };
+$("revealBtn").onclick = () => { T.reveal = !T.reveal; renderStage(); };
+$("openBtn").onclick = () => {
+  if (!T.live || !T.live.qid) return;
+  fs.setDoc(liveRef(), { open: !T.live.open }, { merge: true }).catch(teacherErr);
+};
+$("clearScreenBtn").onclick = () => {
+  fs.setDoc(liveRef(), { qid: null, open: false }, { merge: true }).catch(teacherErr);
+};
+$("clearRespBtn").onclick = async () => {
+  const n = T.responses.length;
+  if (!T.viewQid || !n) return;
+  if (!confirm("Delete all " + n + " responses to this question?")) return;
+  try {
+    const snap = await fs.getDocs(fs.query(fs.collection(db, "responses"), fs.where("qid", "==", T.viewQid)));
+    const docs = snap.docs;
+    for (let k = 0; k < docs.length; k += 400){
+      const batch = fs.writeBatch(db);
+      docs.slice(k, k + 400).forEach(d => batch.delete(d.ref));
+      await batch.commit();
+    }
+  } catch (e){ teacherErr(e); }
+};
+$("presentBtn").onclick = () => {
+  const on = document.body.classList.toggle("present");
+  $("presentBtn").textContent = on ? "Exit present mode" : "Present mode";
+};
+
+customElements.whenDefined("math-field").then(() => {
+  if (isTeacher && T.unsubs.length){ T.quickKey = null; renderLessons(); renderStage(); }
+});
 
 init();
 </script>

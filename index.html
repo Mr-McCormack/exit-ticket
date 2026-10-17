@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Exit Ticket Test</title>
+<script defer src="https://cdn.jsdelivr.net/npm/mathlive"></script>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --ink:#1d2433; --muted:#667085; --line:#d9dee7;
+    --accent:#2f6fde; --accent-ink:#ffffff; --ok:#1f8a4c; --err:#c0392b; --warn-bg:#fff6e0; --warn-line:#f0c75e;
+    --bar:#2f6fde; --bar-bg:#e8eef9;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#14171d; --card:#1d222b; --ink:#e7eaf0; --muted:#98a2b3; --line:#2e3542;
+      --accent:#5b8ff0; --accent-ink:#0d1117; --ok:#4cc27e; --err:#ff7b6b; --warn-bg:#2b2516; --warn-line:#8a6d1f;
+      --bar:#5b8ff0; --bar-bg:#262d3a;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  header{padding:18px 16px 4px;max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px}
+  h1{font-size:1.4rem;margin:0}
+  .tag{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;background:var(--bar-bg);color:var(--accent);padding:2px 8px;border-radius:99px;vertical-align:middle}
+  main{max-width:760px;margin:0 auto;padding:8px 16px 40px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+  .card h2{font-size:1rem;margin:0 0 4px;color:var(--muted);font-weight:600}
+  .card p{margin:0 0 12px}
+  .warn{background:var(--warn-bg);border-color:var(--warn-line)}
+  button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px 16px}
+  button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button.link{border:none;background:none;color:var(--accent);padding:0;text-decoration:underline}
+  .mc{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:12px}
+  .mc button{text-align:left;padding:12px 14px}
+  .mc button b{display:inline-block;width:1.6em}
+  .mc button.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+  math-field{display:block;width:100%;font-size:1.5rem;border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin-bottom:12px;background:var(--card);color:var(--ink)}
+  .status{min-height:1.5em;margin:10px 0 0;color:var(--muted)}
+  .status.ok{color:var(--ok);font-weight:600}
+  .status.err{color:var(--err);font-weight:600}
+  .done .mc button,.done math-field{opacity:.5;pointer-events:none}
+  .row{display:grid;grid-template-columns:minmax(70px,auto) 1fr 3em;align-items:center;gap:10px;margin:6px 0}
+  .track{background:var(--bar-bg);border-radius:6px;height:26px;overflow:hidden}
+  .fill{background:var(--bar);height:100%;width:0;transition:width .35s ease}
+  .count{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+  .row math-field{font-size:1.15rem;border:none;padding:0;margin:0;background:transparent}
+  .total{color:var(--muted);font-size:.9rem;margin-top:8px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+  .toolbar span{color:var(--muted);font-size:.9rem}
+  .hidden-answers .row .track,.hidden-answers .row .count,.hidden-answers .row math-field{filter:blur(8px)}
+  .empty{color:var(--muted);font-style:italic}
+  details summary{cursor:pointer;font-weight:600}
+  #netList{list-style:none;padding:0;margin:10px 0}
+  #netList li{padding:4px 0}
+  .small{font-size:.85rem;color:var(--muted)}
+  code{background:var(--bar-bg);padding:1px 5px;border-radius:4px}
+</style>
+</head>
+<body>
+<header><h1>Exit Ticket <span class="tag">test</span></h1></header>
+<main>
+
+  <section id="setupNotice" class="card warn" hidden>
+    <h2>Not connected yet</h2>
+    <p>Paste your Firebase config into this file (look for <code>firebaseConfig</code> near the bottom), then re-upload it. The connection check below still works without it.</p>
+  </section>
+
+  <section id="errorBox" class="card warn" hidden></section>
+
+  <!-- STUDENT VIEW -->
+  <section id="student" hidden>
+    <div class="card" id="cardMc">
+      <h2>Question 1</h2>
+      <p>Solve: 2x + 3 = 11</p>
+      <div class="mc" id="mcButtons">
+        <button data-v="A"><b>A</b> x = 3</button>
+        <button data-v="B"><b>B</b> x = 4</button>
+        <button data-v="C"><b>C</b> x = 7</button>
+        <button data-v="D"><b>D</b> x = 8</button>
+      </div>
+      <button class="primary" id="mcSubmit" disabled>Submit</button>
+      <p class="status" id="mcStatus"></p>
+    </div>
+
+    <div class="card" id="cardMath">
+      <h2>Question 2</h2>
+      <p>Simplify √8. <span class="small">Tap the keyboard icon for √, ∞, fractions, and exponents.</span></p>
+      <math-field id="mf" math-virtual-keyboard-policy="auto"></math-field>
+      <button class="primary" id="mathSubmit">Submit</button>
+      <p class="status" id="mathStatus"></p>
+    </div>
+  </section>
+
+  <!-- TEACHER VIEW -->
+  <section id="teacher" hidden>
+    <div class="card" id="tallyMc">
+      <h2>Question 1 — multiple choice</h2>
+      <div id="mcTally"></div>
+      <div class="total" id="mcTotal"></div>
+      <div class="toolbar">
+        <span>Quick-add for a student without a laptop:</span>
+        <button data-add="A">+A</button><button data-add="B">+B</button>
+        <button data-add="C">+C</button><button data-add="D">+D</button>
+      </div>
+    </div>
+    <div class="card" id="tallyMath">
+      <h2>Question 2 — math answer</h2>
+      <div id="mathTally"></div>
+      <div class="total" id="mathTotal"></div>
+    </div>
+    <div class="toolbar">
+      <button id="toggleHide">Hide answers (for projector)</button>
+      <button id="clearAll">Clear all responses</button>
+    </div>
+  </section>
+
+  <details class="card" id="netCheck">
+    <summary>Connection check</summary>
+    <p class="small">Tests whether this network can reach everything the page needs. A school filter can sometimes fake a "pass", so a real submit going through is the final proof.</p>
+    <ul id="netList"></ul>
+    <button id="rerun">Run again</button>
+  </details>
+
+</main>
+
+<script type="module">
+/* ============================================================
+   STEP 3 OF SETUP: paste your Firebase config between the braces.
+   It looks like:  apiKey: "...", authDomain: "...", projectId: "...", ...
+   ============================================================ */
+const firebaseConfig = {
+
+};
+
+const FB = "https://www.gstatic.com/firebasejs/10.12.2/";
+const isTeacher = new URLSearchParams(location.search).get("view") === "teacher";
+const configured = Object.keys(firebaseConfig).length > 0;
+const $ = id => document.getElementById(id);
+let db, fs;
+
+function showError(msg){
+  const box = $("errorBox");
+  box.hidden = false;
+  box.innerHTML = "<h2>Problem</h2><p></p>";
+  box.querySelector("p").textContent = msg;
+  $("netCheck").open = true;
+}
+
+/* ---------- connection check ---------- */
+const checks = [
+  ["Firebase code (gstatic.com)", FB + "firebase-app.js"],
+  ["Database (firestore.googleapis.com)", "https://firestore.googleapis.com/"],
+  ["Math keyboard (cdn.jsdelivr.net)", "https://cdn.jsdelivr.net/npm/mathlive"]
+];
+async function probe(url){
+  const c = new AbortController();
+  const t = setTimeout(() => c.abort(), 6000);
+  try { await fetch(url, {mode:"no-cors", cache:"no-store", signal:c.signal}); return true; }
+  catch { return false; }
+  finally { clearTimeout(t); }
+}
+async function runNetCheck(){
+  const list = $("netList");
+  list.innerHTML = "";
+  for (const [label, url] of checks){
+    const li = document.createElement("li");
+    li.textContent = "⏳ " + label;
+    list.appendChild(li);
+    const ok = await probe(url);
+    li.textContent = (ok ? "✅ " : "❌ ") + label + (ok ? "" : " — blocked or unreachable");
+    if (!ok) $("netCheck").open = true;
+  }
+  const li = document.createElement("li");
+  const mlOk = !!customElements.get("math-field");
+  li.textContent = (mlOk ? "✅ " : "❌ ") + "Math keyboard loaded on this page";
+  list.appendChild(li);
+}
+$("rerun").onclick = runNetCheck;
+
+/* ---------- startup ---------- */
+async function init(){
+  runNetCheck();
+  if (!configured){ $("setupNotice").hidden = false; $("netCheck").open = true; return; }
+  try {
+    const app = await import(FB + "firebase-app.js");
+    fs = await import(FB + "firebase-firestore.js");
+    db = fs.getFirestore(app.initializeApp(firebaseConfig));
+  } catch (e) {
+    showError("Couldn't load Firebase. The school filter may be blocking gstatic.com.");
+    return;
+  }
+  isTeacher ? startTeacher() : startStudent();
+}
+
+/* ---------- student view ---------- */
+async function send(q, answer, card, statusEl, reset){
+  statusEl.className = "status";
+  statusEl.textContent = "Sending…";
+  card.querySelectorAll("button.primary").forEach(b => b.disabled = true);
+  try {
+    await fs.addDoc(fs.collection(db, "responses"), {
+      q, answer, source: "student", at: fs.serverTimestamp()
+    });
+    card.classList.add("done");
+    statusEl.className = "status ok";
+    statusEl.innerHTML = 'Got it ✓ &nbsp;<button class="link">Submit for a classmate</button>';
+    statusEl.querySelector("button").onclick = () => {
+      card.classList.remove("done");
+      statusEl.textContent = "";
+      reset();
+    };
+  } catch (e) {
+    statusEl.className = "status err";
+    statusEl.textContent = "Didn't send. Raise your hand. (" + (e.code || e.message) + ")";
+    card.querySelectorAll("button.primary").forEach(b => b.disabled = false);
+  }
+}
+
+function startStudent(){
+  $("student").hidden = false;
+  let choice = null;
+  const mcBtns = [...document.querySelectorAll("#mcButtons button")];
+  const resetMc = () => { choice = null; mcBtns.forEach(b => b.classList.remove("sel")); $("mcSubmit").disabled = true; };
+  mcBtns.forEach(b => b.onclick = () => {
+    choice = b.dataset.v;
+    mcBtns.forEach(x => x.classList.toggle("sel", x === b));
+    $("mcSubmit").disabled = false;
+  });
+  $("mcSubmit").onclick = () => { if (choice) send("q1", choice, $("cardMc"), $("mcStatus"), resetMc); };
+
+  const mf = $("mf");
+  const resetMath = () => { mf.value = ""; $("mathSubmit").disabled = false; };
+  $("mathSubmit").onclick = () => {
+    const v = (mf.value || "").trim();
+    if (!v){ $("mathStatus").className = "status err"; $("mathStatus").textContent = "Type an answer first."; return; }
+    send("q2", v, $("cardMath"), $("mathStatus"), resetMath);
+  };
+}
+
+/* ---------- teacher view ---------- */
+const norm = s => s.replace(/\\left|\\right/g, "").replace(/\s+/g, "");
+
+function barRow(labelNode, count, max){
+  const row = document.createElement("div");
+  row.className = "row";
+  const pct = max ? Math.round(count / max * 100) : 0;
+  row.innerHTML = '<div class="lbl"></div><div class="track"><div class="fill"></div></div><div class="count"></div>';
+  row.querySelector(".lbl").appendChild(labelNode);
+  row.querySelector(".count").textContent = count;
+  requestAnimationFrame(() => row.querySelector(".fill").style.width = pct + "%");
+  return row;
+}
+
+function renderMc(counts, total){
+  const box = $("mcTally");
+  box.innerHTML = "";
+  const max = Math.max(1, ...Object.values(counts));
+  for (const k of ["A","B","C","D"]){
+    const b = document.createElement("b"); b.textContent = k;
+    box.appendChild(barRow(b, counts[k] || 0, max));
+  }
+  $("mcTotal").textContent = total + (total === 1 ? " response" : " responses");
+}
+
+function renderMath(groups, total){
+  const box = $("mathTally");
+  box.innerHTML = "";
+  if (!groups.size){ box.innerHTML = '<p class="empty">No answers yet.</p>'; }
+  const sorted = [...groups.values()].sort((a,b) => b.count - a.count);
+  const max = sorted.length ? sorted[0].count : 1;
+  for (const g of sorted){
+    let label;
+    if (customElements.get("math-field")){
+      label = document.createElement("math-field");
+      label.setAttribute("read-only", "");
+      label.value = g.latex;
+    } else {
+      label = document.createElement("code");
+      label.textContent = g.latex;
+    }
+    box.appendChild(barRow(label, g.count, max));
+  }
+  $("mathTotal").textContent = total + (total === 1 ? " response" : " responses");
+}
+
+function startTeacher(){
+  $("teacher").hidden = false;
+  fs.onSnapshot(fs.collection(db, "responses"), snap => {
+    const mc = {A:0,B:0,C:0,D:0};
+    const math = new Map();
+    let n1 = 0, n2 = 0;
+    snap.forEach(d => {
+      const r = d.data();
+      if (r.q === "q1"){ mc[r.answer] = (mc[r.answer] || 0) + 1; n1++; }
+      else if (r.q === "q2"){
+        const k = norm(r.answer);
+        const g = math.get(k) || {latex: r.answer, count: 0};
+        g.count++; math.set(k, g); n2++;
+      }
+    });
+    renderMc(mc, n1);
+    renderMath(math, n2);
+  }, err => showError("Lost connection to the database (" + err.code + ")."));
+
+  document.querySelectorAll("[data-add]").forEach(b => b.onclick = async () => {
+    b.disabled = true;
+    try {
+      await fs.addDoc(fs.collection(db, "responses"), {
+        q: "q1", answer: b.dataset.add, source: "teacher", at: fs.serverTimestamp()
+      });
+    } catch (e) { showError("Quick-add failed (" + (e.code || e.message) + ")."); }
+    b.disabled = false;
+  });
+
+  $("toggleHide").onclick = () => {
+    const hidden = $("teacher").classList.toggle("hidden-answers");
+    $("toggleHide").textContent = hidden ? "Show answers" : "Hide answers (for projector)";
+  };
+
+  $("clearAll").onclick = async () => {
+    if (!confirm("Delete every response?")) return;
+    const snap = await fs.getDocs(fs.collection(db, "responses"));
+    const batch = fs.writeBatch(db);
+    snap.forEach(d => batch.delete(d.ref));
+    await batch.commit();
+  };
+}
+
+init();
+</script>
+</body>
+</html>

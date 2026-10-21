@@ -8,30 +8,31 @@
 <style>
   :root{
     --bg:#f5f6f8; --card:#ffffff; --ink:#1c2230; --muted:#667085; --line:#d9dee7; --soft:#eef1f6;
-    --accent:#2f6fde; --accent-ink:#ffffff; --ok:#1f8a4c; --ok-soft:#dcf3e5; --err:#c0392b;
+    --accent:#2f6fde; --accent-ink:#ffffff; --ok:#1f8a4c; --err:#c0392b;
     --warn-bg:#fff6e0; --warn-line:#f0c75e; --bar:#2f6fde; --bar-bg:#e8eef9; --live:#d9363e;
+    --l1:#1f8a4c; --l2:#c98a0b; --l3:#c0392b;
   }
   @media (prefers-color-scheme: dark){
     :root{
-      --bg:#13161c; --card:#1c212a; --ink:#e7eaf0; --muted:#98a2b3; --line:#2e3542; --soft:#232a35;
-      --accent:#5b8ff0; --accent-ink:#0d1117; --ok:#4cc27e; --ok-soft:#1b3326; --err:#ff7b6b;
+      --bg:#13161c; --card:#1c212a; --ink:#e7eaf0; --muted:#98a2b3; --line:#2e3542; --soft:#252c38;
+      --accent:#5b8ff0; --accent-ink:#0d1117; --ok:#4cc27e; --err:#ff7b6b;
       --warn-bg:#2b2516; --warn-line:#8a6d1f; --bar:#5b8ff0; --bar-bg:#262d3a; --live:#ff5c63;
+      --l1:#4cc27e; --l2:#e3b341; --l3:#ff7b6b;
     }
   }
   *{box-sizing:border-box}
   [hidden]{display:none !important}
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-  header.top{max-width:1240px;margin:0 auto;padding:16px 16px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  header.top h1{font-size:1.35rem;margin:0;flex:1}
+  header.top{max-width:1320px;margin:0 auto;padding:14px 16px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  header.top h1{font-size:1.3rem;margin:0;flex:1}
   .bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  main{max-width:1240px;margin:0 auto;padding:8px 16px 48px}
+  main{max-width:1320px;margin:0 auto;padding:6px 16px 48px}
   body.is-student main, body.is-student header.top{max-width:760px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
-  .card h2{font-size:.85rem;text-transform:uppercase;letter-spacing:.05em;margin:0 0 10px;color:var(--muted);font-weight:700}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+  .card h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;margin:0 0 10px;color:var(--muted);font-weight:700}
   .warn{background:var(--warn-bg);border-color:var(--warn-line)}
   .small{font-size:.85rem;color:var(--muted)}
-  .empty{color:var(--muted);font-style:italic;margin:6px 0}
-  code{background:var(--soft);padding:1px 5px;border-radius:4px}
+  .empty{color:var(--muted);font-style:italic;margin:8px 0}
 
   button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 15px}
   button:hover:not(:disabled){border-color:var(--accent)}
@@ -39,84 +40,102 @@
   button.danger{color:var(--err)}
   button:disabled{opacity:.4;cursor:not-allowed}
   button.link{border:none;background:none;color:var(--accent);padding:4px 0;text-decoration:underline}
-  button.sm{padding:5px 10px;font-size:.88rem}
-  button.icon{padding:5px 9px}
-  input[type=text],textarea,select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
-  textarea{resize:vertical}
-  label{display:block;font-weight:600;margin:12px 0 6px}
-  label .small{font-weight:400}
+  button.sm{padding:5px 11px;font-size:.88rem}
+  input[type=text],input[type=password],select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+  label.f{display:block;font-weight:600;margin:14px 0 6px}
+  label.f .small{font-weight:400}
 
-  math-field{display:block;width:100%;font-size:1.5rem;border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:var(--card);color:var(--ink)}
-  math-field.inline-math{display:inline-block;width:auto;font-size:inherit;border:none;padding:0 2px;background:transparent;vertical-align:middle}
-  math-field.inline-math::part(menu-toggle), math-field.inline-math::part(virtual-keyboard-toggle){display:none}
-  .rich{white-space:pre-wrap}
-  .prompt{font-size:1.3rem;margin:0 0 14px}
+  math-field{display:block;width:100%;font-size:1.35rem;border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:var(--card);color:var(--ink)}
+  math-field.ro{display:inline-block;width:auto;font-size:inherit;border:none;padding:0;background:transparent;vertical-align:middle}
+  math-field.ro::part(menu-toggle), math-field.ro::part(virtual-keyboard-toggle){display:none}
+  math-field.ro::part(content){padding:0}
+  .mathfb{font-family:ui-monospace,Consolas,monospace;font-size:.9em}
+  .qtext{margin:0}
+  .qmath{font-size:1.25em;margin-top:2px}
+  .prompt .qtext{font-size:1.3rem}
+  .prompt .qmath{font-size:1.9rem;margin-top:6px}
+
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+  .seg button{border:none;border-radius:0;padding:6px 12px}
+  .seg button.on{background:var(--accent);color:var(--accent-ink);font-weight:600}
+  .rowflex{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+  .grow{flex:1}
 
   .status{min-height:1.5em;margin:10px 0 0;color:var(--muted)}
   .status.ok{color:var(--ok);font-weight:600}
   .status.err{color:var(--err);font-weight:600}
 
-  /* student */
-  .waiting{text-align:center;color:var(--muted);padding:40px 10px;font-size:1.1rem}
+  /* ---------- student ---------- */
+  .waiting{text-align:center;color:var(--muted);padding:44px 10px;font-size:1.1rem}
+  #sPrompt{margin-bottom:16px}
   .mc{display:grid;gap:8px;margin-bottom:14px}
-  .mc button{text-align:left;padding:12px 14px;display:flex;gap:10px;align-items:center}
-  .mc button b{flex:0 0 1.6em}
+  .mc button{text-align:left;padding:12px 14px;display:flex;gap:12px;align-items:center;font-size:1.15rem}
+  .mc button b{flex:0 0 1.4em}
   .mc button.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
-  #sMathWrap{margin-bottom:14px}
+  #sMathWrap{margin-bottom:12px}
   .locked .mc button, .locked #sMath{opacity:.5;pointer-events:none}
 
-  /* teacher layout */
-  .tgrid{display:grid;grid-template-columns:minmax(300px,390px) 1fr;gap:16px;align-items:start}
-  @media (max-width:900px){.tgrid{grid-template-columns:1fr}}
-  body.present #side, body.present #whoami, body.present #signOutBtn{display:none}
-  body.present .tgrid{grid-template-columns:1fr}
-  body.present .prompt{font-size:2rem}
-  body.present .row{font-size:1.3rem}
-  .rowflex{display:flex;gap:8px;align-items:center;margin:8px 0}
-  .rowflex select{flex:1}
+  /* ---------- PIN ---------- */
+  .pinbox{max-width:360px;margin:40px auto;text-align:center}
+  .pinbox input{font-size:1.6rem;text-align:center;letter-spacing:.3em;margin:10px 0}
+  .pinbox button{width:100%}
 
-  .qlist{list-style:none;padding:0;margin:12px 0}
-  .qitem{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0}
-  .qitem.is-view{border-color:var(--accent)}
+  /* ---------- teacher layout ---------- */
+  .tgrid{display:grid;grid-template-columns:minmax(330px,440px) 1fr;gap:16px;align-items:start}
+  @media (max-width:920px){.tgrid{grid-template-columns:1fr}}
+  body.present #bankCol, body.present .tonly{display:none !important}
+  body.present .tgrid{grid-template-columns:1fr}
+  body.present .prompt .qtext{font-size:1.8rem}
+  body.present .prompt .qmath{font-size:2.6rem}
+  body.present .row{font-size:1.35rem}
+  #bankCol .card{position:sticky;top:8px;max-height:calc(100vh - 20px);display:flex;flex-direction:column}
+  #qList{list-style:none;padding:0;margin:8px -4px 0 0;overflow:auto;flex:1;padding-right:4px}
+  .qitem{border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin:7px 0}
   .qitem.is-live{box-shadow:0 0 0 2px var(--live) inset;border-color:var(--live)}
-  .qhead{display:flex;gap:8px;align-items:center;font-size:.8rem;color:var(--muted)}
-  .qnum{font-weight:700;color:var(--ink)}
-  .qtype{background:var(--soft);border-radius:99px;padding:1px 8px}
-  .livetag{display:none;color:var(--live);font-weight:700}
+  .qitem.is-deleted{opacity:.6}
+  .qhead{display:flex;gap:6px;align-items:center;font-size:.76rem;color:var(--muted);flex-wrap:wrap}
+  .lvl{font-weight:700;letter-spacing:.02em}
+  .lvl.l1{color:var(--l1)} .lvl.l2{color:var(--l2)} .lvl.l3{color:var(--l3)}
+  .tag{background:var(--soft);border-radius:99px;padding:0 8px}
+  .livetag{color:var(--live);font-weight:700;display:none}
   .qitem.is-live .livetag{display:inline}
-  .qtext{margin:4px 0 8px;max-height:4.6em;overflow:hidden}
+  .qbody{margin:5px 0 7px;font-size:.95rem}
   .qactions{display:flex;gap:6px;flex-wrap:wrap}
 
-  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-  .seg button{border:none;border-radius:0;padding:7px 14px}
-  .seg button.on{background:var(--accent);color:var(--accent-ink);font-weight:600}
-  .preview{background:var(--soft);border-radius:8px;padding:8px 10px;margin-top:6px;min-height:2.4em;font-size:1.05rem}
-  .preview:empty::before{content:"Preview appears here";color:var(--muted);font-style:italic;font-size:.9rem}
-  .choicerow{display:flex;gap:6px;align-items:center;margin:6px 0}
-  .choicerow .letter{font-weight:700;width:1.2em}
-  .choicerow .mark{color:var(--muted)}
-  .choicerow.correct .mark{background:var(--ok);border-color:var(--ok);color:#fff}
-
-  /* stage */
-  .stagehead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-  .badge{font-size:.8rem;font-weight:700;letter-spacing:.05em;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--muted)}
+  /* ---------- stage ---------- */
+  .stagehead{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .badge{font-size:.78rem;font-weight:700;letter-spacing:.05em;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--muted)}
   .badge.live{background:var(--live);color:#fff}
-  .badge.closed{background:var(--soft);color:var(--ink)}
-  .count-big{margin-left:auto;font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
-  .row{display:grid;grid-template-columns:minmax(120px,1.1fr) 2fr 3.2em;align-items:center;gap:12px;margin:8px 0}
-  .mclabel{display:flex;gap:8px;align-items:center;min-width:0}
-  .track{background:var(--bar-bg);border-radius:6px;height:28px;overflow:hidden}
+  .badge.closed{color:var(--ink)}
+  .count-big{font-size:1.1rem;font-weight:700;font-variant-numeric:tabular-nums}
+  #runSel{width:auto;max-width:340px;margin-left:auto;font-size:.88rem;padding:5px 8px}
+  .prompt{margin:4px 0 16px}
+  .row{display:grid;grid-template-columns:minmax(120px,1.2fr) 2fr 3.4em;align-items:center;gap:12px;margin:9px 0}
+  .lbl{display:flex;gap:10px;align-items:center;min-width:0;flex-wrap:wrap}
+  .variants{flex-basis:100%;font-size:.8rem;color:var(--muted)}
+  .track{background:var(--bar-bg);border-radius:6px;height:30px;overflow:hidden}
   .fill{background:var(--bar);height:100%;width:0;transition:width .35s ease}
   .count{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
   .row.correct .fill{background:var(--ok)}
-  .row.correct .mclabel, .row.correct .lbl{color:var(--ok);font-weight:700}
+  .row.correct .lbl{color:var(--ok);font-weight:700}
   .row.correct .count::after{content:" ✓";color:var(--ok)}
-  .hidden-note{color:var(--muted);font-style:italic;margin:10px 0 0}
+  .hidden-note{color:var(--muted);font-style:italic;margin:12px 0 0}
   .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
   .quick{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
-  .quick .small{margin-right:4px}
-  .quick math-field{flex:1;min-width:180px;font-size:1.2rem}
+  .quick math-field, .quick input{flex:1;min-width:180px;width:auto}
 
+  /* ---------- editor / dialogs ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(10,14,22,.55);z-index:50;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:24px 12px}
+  .dialog{background:var(--card);border:1px solid var(--line);border-radius:14px;width:100%;max-width:620px;padding:18px 20px;box-shadow:0 18px 50px rgba(0,0,0,.3)}
+  .dialog h3{margin:0 0 4px;font-size:1.15rem}
+  .choicerow{display:flex;gap:6px;align-items:center;margin:6px 0}
+  .choicerow .letter{font-weight:700;width:1.2em;text-align:center}
+  .choicerow .mark{padding:4px 9px;color:var(--muted)}
+  .choicerow.correct .mark{background:var(--ok);border-color:var(--ok);color:#fff}
+  .choicerow .slot{flex:1;min-width:0}
+  .choicerow .mode{padding:4px 8px;font-size:.78rem}
+  .dlgfoot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:18px}
+  .dlgfoot .spacer{flex:1}
   details summary{cursor:pointer;font-weight:600}
   #netList{list-style:none;padding:0;margin:10px 0}
 </style>
@@ -125,25 +144,25 @@
 <header class="top">
   <h1>Exit Ticket</h1>
   <div id="teacherBar" class="bar" hidden>
-    <span id="whoami" class="small"></span>
     <button id="presentBtn" class="sm">Present mode</button>
-    <button id="signOutBtn" class="sm">Sign out</button>
+    <button id="changePinBtn" class="sm tonly">Change PIN</button>
+    <button id="lockBtn" class="sm tonly">Lock</button>
   </div>
 </header>
 
 <main>
   <section id="notice" class="card warn" hidden></section>
 
-  <!-- ===================== STUDENT VIEW ===================== -->
+  <!-- ===================== STUDENT ===================== -->
   <section id="student" hidden>
     <div class="card" id="sCard">
       <div id="sWaiting" class="waiting">Waiting for your teacher to send a question…</div>
       <div id="sQuestion" hidden>
-        <div id="sPrompt" class="prompt rich"></div>
+        <div id="sPrompt" class="prompt"></div>
         <div id="sChoices" class="mc"></div>
         <div id="sMathWrap" hidden>
           <math-field id="sMath" math-virtual-keyboard-policy="auto"></math-field>
-          <p class="small">Click the keyboard icon for √, ∞, fractions, and exponents.</p>
+          <p class="small">Click the keyboard icon for √, ∞, fractions, and exponents. Two answers? Separate them with a comma.</p>
         </div>
         <button class="primary" id="sSubmit" disabled>Submit</button>
         <p class="status" id="sStatus"></p>
@@ -151,74 +170,54 @@
     </div>
   </section>
 
-  <!-- ===================== TEACHER SIGN-IN ===================== -->
-  <section id="signin" class="card" hidden>
-    <h2>Teacher sign-in</h2>
-    <p>Sign in with the Google account listed in your database rules.</p>
-    <button class="primary" id="signInBtn">Sign in with Google</button>
+  <!-- ===================== PIN ===================== -->
+  <section id="pinScreen" hidden>
+    <div class="card pinbox">
+      <h2>Teacher PIN</h2>
+      <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" aria-label="Teacher PIN">
+      <button id="pinGo" class="primary">Unlock</button>
+      <p class="status" id="pinStatus"></p>
+      <p class="small">First time? The PIN is <b>1234</b>. You'll choose your own right after.</p>
+    </div>
   </section>
 
-  <!-- ===================== TEACHER VIEW ===================== -->
+  <!-- ===================== TEACHER ===================== -->
   <section id="teacher" hidden>
     <div class="tgrid">
-      <aside id="side">
+      <div id="bankCol">
         <div class="card">
-          <h2>Lesson</h2>
+          <h2>Question bank</h2>
+          <select id="topicSel" aria-label="Topic"></select>
           <div class="rowflex">
-            <select id="lessonSel" aria-label="Lesson"></select>
-            <button id="newLesson" class="sm">New</button>
+            <div class="seg" id="lvlSeg">
+              <button data-l="0">All</button><button data-l="1">Easy</button><button data-l="2">Medium</button><button data-l="3">Hard</button>
+            </div>
           </div>
           <div class="rowflex">
-            <button id="renameLesson" class="sm">Rename</button>
-            <button id="deleteLesson" class="sm danger">Delete lesson</button>
+            <button id="randomBtn" class="primary grow">🎲 Push random</button>
+            <button id="newQBtn">+ New</button>
           </div>
-          <ol id="qList" class="qlist"></ol>
-          <button id="addQ" class="primary">+ Add question</button>
+          <ul id="qList"></ul>
+          <button id="showDelBtn" class="link small" hidden></button>
         </div>
+      </div>
 
-        <div class="card" id="editor" hidden>
-          <h2 id="edTitle">New question</h2>
-          <div class="seg" id="edType">
-            <button data-type="mc">Multiple choice</button>
-            <button data-type="math">Math answer</button>
-          </div>
-          <label for="edPrompt">Question <span class="small">— put math between $ signs, like Simplify $\sqrt{8}$</span></label>
-          <textarea id="edPrompt" rows="3"></textarea>
-          <div id="edPreview" class="preview rich"></div>
-
-          <div id="edMc">
-            <label>Choices <span class="small">— click ✓ to mark the correct one (optional)</span></label>
-            <div id="edChoices"></div>
-            <button id="edAddChoice" class="link">+ Add choice</button>
-          </div>
-
-          <div id="edMath" hidden>
-            <label>Correct answer <span class="small">— optional; equivalent answers like √8 and 2√2 are grouped</span></label>
-            <math-field id="edCorrect" math-virtual-keyboard-policy="auto"></math-field>
-          </div>
-
-          <div class="rowflex" style="margin-top:14px">
-            <button id="edSave" class="primary">Save question</button>
-            <button id="edCancel">Cancel</button>
-          </div>
-        </div>
-      </aside>
-
-      <div id="stage">
+      <div id="stageCol">
         <div class="card">
           <div class="stagehead">
             <span id="liveBadge" class="badge"></span>
             <span id="respCount" class="count-big"></span>
+            <select id="runSel" class="tonly" aria-label="Earlier pushes"></select>
           </div>
-          <div id="tPrompt" class="prompt rich"></div>
+          <div id="tPrompt" class="prompt"></div>
           <div id="tTally"></div>
           <div id="stageTools">
             <div class="toolbar">
               <button id="hideBtn">Hide answers</button>
               <button id="revealBtn">Show correct</button>
               <button id="openBtn">Close submissions</button>
+              <button id="againBtn">Push again (fresh tally)</button>
               <button id="clearScreenBtn">Clear student screens</button>
-              <button id="clearRespBtn" class="danger">Clear responses</button>
             </div>
             <div class="quick" id="quick"></div>
           </div>
@@ -235,81 +234,172 @@
   </details>
 </main>
 
+<!-- ===================== EDITOR ===================== -->
+<div id="edOverlay" class="overlay" hidden>
+  <div class="dialog" role="dialog" aria-labelledby="edTitle">
+    <h3 id="edTitle">Edit question</h3>
+    <p class="small" id="edSub"></p>
+
+    <div class="rowflex">
+      <div class="grow">
+        <label class="f" for="edTopic">Topic</label>
+        <input id="edTopic" type="text" list="topicList" autocomplete="off">
+        <datalist id="topicList"></datalist>
+      </div>
+    </div>
+    <div class="rowflex">
+      <div class="seg" id="edLevel"><button data-l="1">Easy</button><button data-l="2">Medium</button><button data-l="3">Hard</button></div>
+      <div class="seg" id="edType"><button data-t="mc">Multiple choice</button><button data-t="math">Math answer</button></div>
+    </div>
+
+    <label class="f" for="edText">Directions <span class="small">— plain words, like "Solve for x."</span></label>
+    <input id="edText" type="text">
+
+    <label class="f">Math <span class="small">— optional; use the keyboard icon for fractions, roots, and symbols</span></label>
+    <div id="edMathSlot"></div>
+
+    <div id="edMcWrap">
+      <label class="f">Choices <span class="small">— click ✓ on the correct one. Choices are shuffled each time you push. Use “abc” for a word answer.</span></label>
+      <div id="edChoices"></div>
+      <button id="edAddChoice" class="link">+ Add choice</button>
+    </div>
+
+    <div id="edMathWrap">
+      <label class="f">Correct answer <span class="small">— optional; equivalent forms are grouped (√8 = 2√2, ½ = 0.5). Separate two answers with a comma.</span></label>
+      <div id="edCorrectSlot"></div>
+    </div>
+
+    <div class="dlgfoot">
+      <button id="edDelete" class="danger sm"></button>
+      <button id="edReset" class="sm">Reset to original</button>
+      <span class="spacer"></span>
+      <button id="edCancel">Cancel</button>
+      <button id="edSave">Save</button>
+      <button id="edSavePush" class="primary">Save &amp; Push ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SET PIN ===================== -->
+<div id="pinOverlay" class="overlay" hidden>
+  <div class="dialog" style="max-width:420px">
+    <h3 id="pinTitle">Choose your teacher PIN</h3>
+    <p class="small" id="pinSub"></p>
+    <label class="f" for="newPin1">New PIN <span class="small">— 6 or more digits or letters recommended</span></label>
+    <input id="newPin1" type="password" autocomplete="new-password">
+    <label class="f" for="newPin2">Type it again</label>
+    <input id="newPin2" type="password" autocomplete="new-password">
+    <p class="status" id="newPinStatus"></p>
+    <div class="dlgfoot">
+      <span class="spacer"></span>
+      <button id="newPinCancel">Cancel</button>
+      <button id="newPinSave" class="primary">Save PIN</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 const FB = "https://www.gstatic.com/firebasejs/10.12.2/";
 const isTeacher = new URLSearchParams(location.search).get("view") === "teacher";
 const LETTERS = "ABCDEF";
+const LEVELS = { 1: "Easy", 2: "Medium", 3: "Hard" };
 const $ = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 let fs, au, db, auth;
 
 const store = {
   get(k){ try { return localStorage.getItem(k); } catch { return null; } },
   set(k, v){ try { localStorage.setItem(k, v); } catch {} }
 };
-
-function notice(msg, html){
+function notice(msg){
   const n = $("notice");
   n.hidden = false;
   n.innerHTML = "<h2>Heads up</h2><p></p>";
-  const p = n.querySelector("p");
-  if (html) p.innerHTML = msg; else p.textContent = msg;
+  n.querySelector("p").textContent = msg;
 }
-function clearNotice(){ $("notice").hidden = true; }
+const clearNotice = () => { $("notice").hidden = true; };
 
-/* ---------- math display & answer matching ---------- */
+/* =================== math display & input =================== */
+const mlReady = () => !!customElements.get("math-field");
 function mathEl(latex){
-  if (customElements.get("math-field")){
+  if (mlReady()){
     const m = document.createElement("math-field");
     m.setAttribute("read-only", "");
-    m.className = "inline-math";
+    m.className = "ro";
     m.value = latex;
     return m;
   }
-  const c = document.createElement("code");
+  const c = document.createElement("span");
+  c.className = "mathfb";
   c.textContent = latex;
   return c;
 }
-// Renders text with $...$ math segments.
-function rich(el, str){
+// "Directions" text + optional display math.
+function promptEl(el, text, math){
   el.textContent = "";
-  String(str || "").split(/\$([^$]+)\$/).forEach((part, i) => {
-    if (i % 2 === 0){ if (part) el.appendChild(document.createTextNode(part)); }
-    else el.appendChild(mathEl(part));
-  });
+  if (text){ const p = document.createElement("p"); p.className = "qtext"; p.textContent = text; el.appendChild(p); }
+  if (math){ const d = document.createElement("div"); d.className = "qmath"; d.appendChild(mathEl(math)); el.appendChild(d); }
 }
+// Editable math box (falls back to a text box if the math keyboard can't load).
+function mathInput(value){
+  let el;
+  if (mlReady()){
+    el = document.createElement("math-field");
+    el.setAttribute("math-virtual-keyboard-policy", "auto");
+    el.value = value || "";
+  } else {
+    el = document.createElement("input");
+    el.type = "text";
+    el.placeholder = "LaTeX, e.g. \\frac{1}{2}";
+    el.value = value || "";
+  }
+  return el;
+}
+const valOf = el => String((el && el.value) || "").trim();
 
 /*EVAL-START*/
 function normLatex(s){
   return String(s)
-    .replace(/\\left|\\right/g, "")
+    .replace(/\\(?:left|right|mleft|mright)(?![a-zA-Z])/g, "")
+    .replace(/\\displaystyle/g, "")
     .replace(/\\[dt]frac/g, "\\frac")
+    .replace(/\\placeholder\{\}/g, "")
+    .replace(/\\(?:qquad|quad)(?![a-zA-Z])/g, "")
     .replace(/\\[,;:! ]/g, "")
+    .replace(/\\(?:lvert|rvert|vert)(?![a-zA-Z])/g, "|")
+    .replace(/\\lbrack(?![a-zA-Z])/g, "[").replace(/\\rbrack(?![a-zA-Z])/g, "]")
+    .replace(/\\exponentialE/g, "e").replace(/\\imaginaryI/g, "i")
+    .replace(/\\(?:cdot|times)(?![a-zA-Z])/g, "*").replace(/\\div(?![a-zA-Z])/g, "/")
     .replace(/\s+/g, "");
 }
-// Evaluates simple numeric LaTeX (fractions, roots, powers, pi). Returns null if not purely numeric.
-function latexToNumber(src){
-  let s = normLatex(src).replace(/\\cdot|\\times/g, "*").replace(/\\div/g, "/").replace(/^[a-zA-Z]=/, "");
+// Parses simple algebra (numbers, one-letter variables, + - * /, powers, fractions, roots, pi, |x|).
+// Returns a function of variable values, or null if the expression isn't something it understands.
+function compileExpr(s){
   let i = 0;
   const peek = () => s[i];
   const at = w => s.startsWith(w, i);
   const expect = ch => { if (s[i] !== ch) throw 0; i++; };
-  const startsFactor = () => /[0-9.({]/.test(peek() || "") || at("\\sqrt") || at("\\frac") || at("\\pi");
+  const isLetter = c => !!c && /[a-zA-Z]/.test(c);
+  const startsFactor = () => { const c = peek(); return !!c && (/[0-9.({a-zA-Z]/.test(c) || at("\\sqrt") || at("\\frac") || at("\\pi")); };
   function expr(){
-    let v = term();
-    while (peek() === "+" || peek() === "-"){ const op = s[i++]; const r = term(); v = op === "+" ? v + r : v - r; }
-    return v;
+    let f = term();
+    while (peek() === "+" || peek() === "-"){
+      const op = s[i++]; const a = f, b = term();
+      f = op === "+" ? (v => a(v) + b(v)) : (v => a(v) - b(v));
+    }
+    return f;
   }
   function term(){
-    let v = unary();
+    let f = unary();
     for (;;){
       const c = peek();
-      if (c === "*" || c === "/"){ i++; const r = unary(); v = c === "*" ? v * r : v / r; }
-      else if (c !== undefined && startsFactor()) v *= power();
-      else return v;
+      if (c === "*" || c === "/"){ i++; const a = f, b = unary(); f = c === "*" ? (v => a(v) * b(v)) : (v => a(v) / b(v)); }
+      else if (startsFactor()){ const a = f, b = power(); f = v => a(v) * b(v); }
+      else return f;
     }
   }
   function unary(){
-    if (peek() === "-"){ i++; return -unary(); }
+    if (peek() === "-"){ i++; const a = unary(); return v => -a(v); }
     if (peek() === "+"){ i++; return unary(); }
     return power();
   }
@@ -319,50 +409,88 @@ function latexToNumber(src){
       i++;
       let e;
       if (peek() === "{") e = group();
-      else if (/[0-9]/.test(peek() || "")) e = Number(s[i++]);
+      else if (/[0-9]/.test(peek() || "")){ const n = Number(s[i++]); e = () => n; }
+      else if (isLetter(peek())) e = letter();
       else throw 0;
-      return Math.pow(b, e);
+      return v => Math.pow(b(v), e(v));
     }
     return b;
   }
-  function group(){ expect("{"); const v = expr(); expect("}"); return v; }
+  function group(){ expect("{"); const f = expr(); expect("}"); return f; }
+  function letter(){
+    const c = s[i++];
+    if (c === "e") return () => Math.E;
+    return v => v(c);
+  }
   function arg(){
     if (peek() === "{") return group();
-    if (/[0-9]/.test(peek() || "")) return Number(s[i++]);
+    if (/[0-9]/.test(peek() || "")){ const n = Number(s[i++]); return () => n; }
+    if (isLetter(peek())) return letter();
     throw 0;
   }
   function atom(){
     const c = peek();
-    if (c === "("){ i++; const v = expr(); expect(")"); return v; }
+    if (c === "("){ i++; const f = expr(); expect(")"); return f; }
     if (c === "{") return group();
-    if (at("\\frac")){ i += 5; const a = arg(); const b = arg(); return a / b; }
+    if (c === "|"){ i++; const f = expr(); expect("|"); return v => Math.abs(f(v)); }
+    if (at("\\frac")){ i += 5; const a = arg(), b = arg(); return v => a(v) / b(v); }
     if (at("\\sqrt")){
       i += 5;
-      let n = 2;
+      let n = () => 2;
       if (peek() === "["){ i++; n = expr(); expect("]"); }
       const a = arg();
-      return n === 2 ? Math.sqrt(a) : Math.sign(a) * Math.pow(Math.abs(a), 1 / n);
+      return v => { const k = n(v), x = a(v); return k === 2 ? Math.sqrt(x) : Math.sign(x) * Math.pow(Math.abs(x), 1 / k); };
     }
-    if (at("\\pi")){ i += 3; return Math.PI; }
+    if (at("\\pi")){ i += 3; return () => Math.PI; }
+    if (isLetter(c)) return letter();
     const m = /^(\d*\.\d+|\d+\.?)/.exec(s.slice(i));
-    if (m){ i += m[0].length; return parseFloat(m[0]); }
+    if (m){ i += m[0].length; const n = parseFloat(m[0]); return () => n; }
     throw 0;
   }
   try {
     if (!s) return null;
-    const v = expr();
-    if (i !== s.length || !isFinite(v)) return null;
-    return v;
+    const f = expr();
+    return i === s.length ? f : null;
   } catch { return null; }
 }
+// Value of a letter in each of three test runs (fixed, so keys are stable).
+const SAMPLE = [0, 1, 2].map(k => c => 1.13 + ((c.charCodeAt(0) * 7 + k * 11) % 23) * 0.173 + k * 0.29);
+function itemKey(item){
+  let s = item.replace(/^[a-zA-Z]=/, "");
+  const f = compileExpr(s);
+  if (f){
+    const vals = SAMPLE.map(v => f(v));
+    if (vals.every(x => isFinite(x))) return "v:" + vals.map(x => Math.abs(x) < 1e-10 ? 0 : Number(x.toPrecision(9))).join(";");
+  }
+  return "s:" + s;
+}
+function splitTop(s){
+  const out = []; let depth = 0, cur = "";
+  for (const ch of s){
+    if ("([{".includes(ch)) depth++;
+    else if (")]}".includes(ch)) depth--;
+    if (ch === "," && depth === 0){ out.push(cur); cur = ""; } else cur += ch;
+  }
+  out.push(cur);
+  return out.filter(x => x !== "");
+}
+// Two answers that mean the same thing get the same key.
 function answerKey(latex){
-  const n = latexToNumber(latex);
-  if (n !== null) return "n:" + (Math.abs(n) < 1e-12 ? 0 : Number(n.toPrecision(10)));
-  return "s:" + normLatex(latex).replace(/^[a-zA-Z]=/, "");
+  const s = normLatex(latex);
+  const items = [];
+  for (const part of splitTop(s)){
+    const m = part.match(/\\(pm|mp)(?![a-zA-Z])/);
+    if (m){
+      items.push(part.replace(m[0], "+").replace(/\+\+/g, "+").replace(/\+-|-\+/g, "-"));
+      items.push(part.replace(m[0], "-").replace(/--/g, "+").replace(/\+-|-\+/g, "-"));
+    } else items.push(part);
+  }
+  const keys = items.map(itemKey);
+  return keys.length === 1 ? keys[0] : "L:" + [...new Set(keys)].sort().join("|");
 }
 /*EVAL-END*/
 
-/* ---------- connection check ---------- */
+/* =================== connection check =================== */
 const checks = [
   ["Firebase code (gstatic.com)", FB + "firebase-app.js"],
   ["Database (firestore.googleapis.com)", "https://firestore.googleapis.com/"],
@@ -387,21 +515,19 @@ async function runNetCheck(){
     if (!ok) $("netCheck").open = true;
   }
   const li = document.createElement("li");
-  li.textContent = (customElements.get("math-field") ? "✅ " : "❌ ") + "Math keyboard loaded on this page";
+  li.textContent = (mlReady() ? "✅ " : "❌ ") + "Math keyboard loaded on this page";
   list.appendChild(li);
 }
 $("rerun").onclick = runNetCheck;
 
-/* ---------- startup ---------- */
+/* =================== startup =================== */
 async function init(){
   document.body.classList.add(isTeacher ? "is-teacher" : "is-student");
   let cfg = null;
   try { cfg = (await import("./firebase-config.js")).firebaseConfig; } catch {}
   if (!cfg || !Object.keys(cfg).length){
-    notice("This page can't find its <code>firebase-config.js</code> file. Add it to your GitHub repo next to <code>index.html</code>.", true);
-    $("netCheck").open = true;
-    runNetCheck();
-    return;
+    notice("This page can't find its firebase-config.js file. Add it to your GitHub repo next to index.html.");
+    $("netCheck").open = true; runNetCheck(); return;
   }
   try {
     const app = await import(FB + "firebase-app.js");
@@ -411,25 +537,24 @@ async function init(){
     if (isTeacher){ au = await import(FB + "firebase-auth.js"); auth = au.getAuth(a); }
   } catch {
     notice("Couldn't load Firebase. The school web filter may be blocking gstatic.com.");
-    $("netCheck").open = true;
-    runNetCheck();
-    return;
+    $("netCheck").open = true; runNetCheck(); return;
   }
-  isTeacher ? startTeacherAuth() : startStudent();
+  // Give the math keyboard a moment to load so questions render nicely the first time.
+  await Promise.race([customElements.whenDefined("math-field"), sleep(4000)]);
+  isTeacher ? startTeacher() : startStudent();
 }
 const liveRef = () => fs.doc(db, "state", "live");
+const rid = () => Math.random().toString(36).slice(2, 8) + Date.now().toString(36);
 
-/* ===================== STUDENT ===================== */
+/* =================== STUDENT =================== */
 function startStudent(){
   $("student").hidden = false;
   const S = { cur: null, choice: null, done: false };
   const mf = $("sMath");
-
   const setStatus = (msg, cls) => { const st = $("sStatus"); st.className = "status" + (cls ? " " + cls : ""); st.textContent = msg; };
 
   function refresh(){
-    const q = S.cur;
-    if (!q) return;
+    const q = S.cur; if (!q) return;
     const open = !!q.open;
     $("sCard").classList.toggle("locked", S.done || !open);
     $("sSubmit").disabled = S.done || !open || (q.type === "mc" && S.choice === null);
@@ -438,30 +563,24 @@ function startStudent(){
       st.className = "status ok";
       st.innerHTML = 'Got it ✓ &nbsp;<button class="link">Submit for a classmate</button>';
       st.querySelector("button").onclick = () => { S.done = false; resetInputs(); setStatus(""); refresh(); };
-    } else if (!open){
-      setStatus("Submissions are closed.");
-    } else if ($("sStatus").textContent === "Submissions are closed."){
-      setStatus("");
-    }
+    } else if (!open) setStatus("Submissions are closed.");
+    else if ($("sStatus").textContent === "Submissions are closed.") setStatus("");
   }
-
   function resetInputs(){
     S.choice = null;
     document.querySelectorAll("#sChoices button").forEach(b => b.classList.remove("sel"));
-    if (customElements.get("math-field")) mf.value = "";
+    try { mf.value = ""; } catch {}
   }
-
-  function renderQuestion(){
+  function render(){
     const q = S.cur;
-    rich($("sPrompt"), q.prompt);
+    promptEl($("sPrompt"), q.text, q.math);
     const box = $("sChoices");
     box.innerHTML = "";
     if (q.type === "mc"){
       (q.choices || []).forEach((c, idx) => {
         const b = document.createElement("button");
         const L = document.createElement("b"); L.textContent = LETTERS[idx];
-        const t = document.createElement("span"); t.className = "rich"; rich(t, c);
-        b.append(L, t);
+        b.append(L, mathEl(c));
         b.onclick = () => {
           S.choice = idx;
           box.querySelectorAll("button").forEach(x => x.classList.toggle("sel", x === b));
@@ -473,7 +592,7 @@ function startStudent(){
     box.hidden = q.type !== "mc";
     $("sMathWrap").hidden = q.type !== "math";
     resetInputs();
-    S.done = store.get("et_sub_" + q.qid) === "1";
+    S.done = store.get("et_run_" + q.run) === "1";
     setStatus("");
     refresh();
   }
@@ -481,19 +600,15 @@ function startStudent(){
   fs.onSnapshot(liveRef(), snap => {
     clearNotice();
     const d = snap.exists() ? snap.data() : null;
-    if (!d || !d.qid){
+    if (!d || !d.run){
       S.cur = null;
-      $("sWaiting").hidden = false;
-      $("sQuestion").hidden = true;
+      $("sWaiting").hidden = false; $("sQuestion").hidden = true;
       return;
     }
-    const prev = S.cur;
-    const changed = !prev || prev.qid !== d.qid || prev.type !== d.type || prev.prompt !== d.prompt ||
-                    JSON.stringify(prev.choices) !== JSON.stringify(d.choices);
+    const changed = !S.cur || S.cur.run !== d.run;
     S.cur = d;
-    $("sWaiting").hidden = true;
-    $("sQuestion").hidden = false;
-    if (changed) renderQuestion(); else refresh();
+    $("sWaiting").hidden = true; $("sQuestion").hidden = false;
+    if (changed) render(); else refresh();
   }, err => notice("Can't reach the question right now (" + err.code + "). Raise your hand."));
 
   $("sSubmit").onclick = async () => {
@@ -504,303 +619,366 @@ function startStudent(){
       if (S.choice === null) return;
       answer = LETTERS[S.choice];
     } else {
-      answer = (customElements.get("math-field") ? mf.value : "").trim();
+      answer = valOf(mf);
       if (!answer){ setStatus("Type an answer first.", "err"); return; }
     }
     setStatus("Sending…");
     $("sSubmit").disabled = true;
-    const qid = q.qid;
+    const run = q.run;
     try {
-      await fs.addDoc(fs.collection(db, "responses"), { qid, answer, source: "student", at: fs.serverTimestamp() });
-      store.set("et_sub_" + qid, "1");
-      if (S.cur && S.cur.qid === qid){ S.done = true; refresh(); }
+      await fs.addDoc(fs.collection(db, "responses"), { run, answer, source: "student", at: fs.serverTimestamp() });
+      store.set("et_run_" + run, "1");
+      if (S.cur && S.cur.run === run){ S.done = true; refresh(); }
     } catch (e){
       setStatus(e.code === "permission-denied" ? "Submissions are closed." : "Didn't send. Raise your hand. (" + (e.code || e.message) + ")", "err");
       refresh();
     }
   };
-
-  customElements.whenDefined("math-field").then(() => { if (S.cur) rich($("sPrompt"), S.cur.prompt); });
+  customElements.whenDefined("math-field").then(() => { if (S.cur){ const keep = S.done; render(); S.done = keep; refresh(); } });
 }
 
-/* ===================== TEACHER ===================== */
+/* =================== TEACHER =================== */
 const T = {
-  lessons: [], lessonId: null, live: null, viewQid: null, responses: [],
-  hide: false, reveal: false, unsubs: [], unsubResp: null, editing: null,
-  createdDefault: false, quickKey: null
+  stock: [], edits: new Map(), runs: [], live: null, viewRun: null, responses: [],
+  topic: store.get("et_topic") || "", level: Number(store.get("et_level") || 0),
+  hide: store.get("et_hide") === "1", reveal: false, showDeleted: false,
+  unsubs: [], unsubResp: null, quickKey: null, editing: null, forcedPin: false
 };
 
+/* ----- PIN & session ----- */
 function authMsg(e){
   const c = e && e.code;
-  if (c === "auth/unauthorized-domain") return "Firebase doesn't recognize this website yet. In Firebase, go to Authentication → Settings → Authorized domains and add " + location.hostname + ".";
-  if (c === "auth/operation-not-allowed" || c === "auth/configuration-not-found") return "Google sign-in isn't turned on. In Firebase, go to Authentication → Sign-in method and enable Google.";
-  if (c === "auth/popup-blocked") return "The sign-in popup was blocked. Allow popups for this site and try again.";
-  if (c === "auth/popup-closed-by-user" || c === "auth/cancelled-popup-request") return "Sign-in was cancelled.";
-  return "Sign-in failed (" + (c || e.message) + ").";
+  if (c === "auth/operation-not-allowed" || c === "auth/admin-restricted-operation")
+    return "Anonymous sign-in is turned off. In Firebase, go to Authentication → Sign-in method, choose Anonymous, enable it, and save.";
+  if (c === "auth/unauthorized-domain")
+    return "Firebase doesn't recognize this website. In Firebase, go to Authentication → Settings → Authorized domains and add " + location.hostname + ".";
+  return "Couldn't connect (" + (c || (e && e.message)) + ").";
 }
+function authReady(){
+  if (typeof auth.authStateReady === "function") return auth.authStateReady();
+  return new Promise(res => { const u = au.onAuthStateChanged(auth, () => { u(); res(); }); });
+}
+async function ensureUser(){
+  await authReady();
+  if (!auth.currentUser) await au.signInAnonymously(auth);
+  return auth.currentUser;
+}
+const sessionRef = () => fs.doc(db, "sessions", auth.currentUser.uid);
+const pinRef = () => fs.doc(db, "config", "pin");
+
+function showPinScreen(msg){
+  stopTeacher();
+  $("teacher").hidden = true; $("teacherBar").hidden = true; $("pinScreen").hidden = false;
+  document.body.classList.remove("present");
+  const st = $("pinStatus");
+  st.className = "status" + (msg ? " err" : "");
+  st.textContent = msg || "";
+  $("pinInput").value = "";
+  setTimeout(() => $("pinInput").focus(), 50);
+}
+// Returns "ok", "default" (PIN never changed), or "locked".
+async function checkTeacher(){
+  try {
+    const snap = await fs.getDoc(pinRef());
+    return snap.exists() ? "ok" : "default";
+  } catch (e){
+    if (e.code === "permission-denied") return "locked";
+    throw e;
+  }
+}
+async function enterApp(status){
+  $("pinScreen").hidden = true; $("teacher").hidden = false; $("teacherBar").hidden = false;
+  clearNotice();
+  listenTeacher();
+  if (status === "default") openPinDialog(true);
+}
+async function startTeacher(){
+  $("pinGo").onclick = unlock;
+  $("pinInput").onkeydown = e => { if (e.key === "Enter") unlock(); };
+  try {
+    await authReady();
+    if (!auth.currentUser){ showPinScreen(); return; }
+    const st = await checkTeacher();
+    st === "locked" ? showPinScreen() : enterApp(st);
+  } catch (e){ showPinScreen(); notice(authMsg(e)); }
+}
+async function unlock(){
+  const pin = $("pinInput").value.trim();
+  if (!pin) return;
+  $("pinGo").disabled = true;
+  $("pinStatus").className = "status"; $("pinStatus").textContent = "Checking…";
+  try {
+    await ensureUser();
+    await fs.setDoc(sessionRef(), { pin, at: fs.serverTimestamp() });
+    const st = await checkTeacher();
+    if (st === "locked") throw { code: "permission-denied" };
+    enterApp(st);
+  } catch (e){
+    if (e.code === "permission-denied"){
+      await sleep(800);
+      $("pinStatus").className = "status err"; $("pinStatus").textContent = "That PIN isn't right.";
+      $("pinInput").select();
+    } else { $("pinStatus").textContent = ""; notice(authMsg(e)); }
+  }
+  $("pinGo").disabled = false;
+}
+$("lockBtn").onclick = async () => {
+  try { await fs.deleteDoc(sessionRef()); } catch {}
+  showPinScreen();
+};
+
+function openPinDialog(forced){
+  T.forcedPin = forced;
+  $("pinTitle").textContent = forced ? "Choose your teacher PIN" : "Change your teacher PIN";
+  $("pinSub").textContent = forced
+    ? "You're using the starting PIN (1234), which anyone could guess. Pick a new one before you use this with students."
+    : "Any other computer that's unlocked with your old PIN will be locked.";
+  $("newPinCancel").hidden = forced;
+  $("newPin1").value = $("newPin2").value = "";
+  $("newPinStatus").textContent = "";
+  $("pinOverlay").hidden = false;
+  setTimeout(() => $("newPin1").focus(), 50);
+}
+$("changePinBtn").onclick = () => openPinDialog(false);
+$("newPinCancel").onclick = () => { if (!T.forcedPin) $("pinOverlay").hidden = true; };
+$("newPinSave").onclick = async () => {
+  const a = $("newPin1").value.trim(), b = $("newPin2").value.trim();
+  const st = $("newPinStatus");
+  st.className = "status err";
+  if (a.length < 4) return st.textContent = "Use at least 4 characters (6 or more is safer).";
+  if (a.length > 20) return st.textContent = "Keep it to 20 characters or fewer.";
+  if (a === "1234") return st.textContent = "Pick something other than 1234.";
+  if (a !== b) return st.textContent = "Those two don't match.";
+  $("newPinSave").disabled = true;
+  try {
+    const batch = fs.writeBatch(db);
+    batch.set(pinRef(), { pin: a });
+    batch.set(sessionRef(), { pin: a, at: fs.serverTimestamp() });
+    await batch.commit();
+    $("pinOverlay").hidden = true;
+  } catch (e){
+    st.textContent = "Couldn't save the PIN (" + (e.code || e.message) + "). Check that the new database rules are published.";
+  }
+  $("newPinSave").disabled = false;
+};
+
 function teacherErr(e){
   if (e && e.code === "permission-denied"){
-    const who = auth && auth.currentUser ? auth.currentUser.email : "this account";
-    notice("You're signed in as " + who + ", but the database rules don't allow this account to manage questions. Check that the email in your Firestore rules matches, and that the rules are published.");
-  } else {
-    notice("Something went wrong (" + ((e && (e.code || e.message)) || "unknown") + ").");
-  }
+    $("pinOverlay").hidden = true; $("edOverlay").hidden = true;
+    showPinScreen("Locked. The PIN may have been changed on another computer.");
+  } else notice("Something went wrong (" + ((e && (e.code || e.message)) || "unknown") + ").");
 }
 
-function startTeacherAuth(){
-  $("signInBtn").onclick = async () => {
-    try { clearNotice(); await au.signInWithPopup(auth, new au.GoogleAuthProvider()); }
-    catch (e){ notice(authMsg(e)); }
-  };
-  $("signOutBtn").onclick = () => au.signOut(auth);
-  au.onAuthStateChanged(auth, user => {
-    if (!user){
-      stopTeacher();
-      $("signin").hidden = false; $("teacher").hidden = true; $("teacherBar").hidden = true;
-      return;
-    }
-    $("signin").hidden = true; $("teacher").hidden = false; $("teacherBar").hidden = false;
-    $("whoami").textContent = user.email;
-    startTeacher();
-  });
-}
-
+/* ----- data ----- */
 function stopTeacher(){
-  T.unsubs.forEach(u => u());
-  T.unsubs = [];
+  T.unsubs.forEach(u => u()); T.unsubs = [];
   if (T.unsubResp){ T.unsubResp(); T.unsubResp = null; }
 }
-
-const curLesson = () => T.lessons.find(l => l.id === T.lessonId) || null;
-function findQ(qid){
-  for (const l of T.lessons){
-    const q = (l.questions || []).find(x => x.id === qid);
-    if (q) return q;
-  }
-  return null;
-}
-const rid = () => Math.random().toString(36).slice(2, 9) + Date.now().toString(36);
-const ms = t => (t && t.toMillis ? t.toMillis() : Date.now());
-
-function startTeacher(){
+async function listenTeacher(){
   if (T.unsubs.length) return;
-  T.unsubs.push(fs.onSnapshot(fs.collection(db, "lessons"), snap => {
-    clearNotice();
-    T.lessons = snap.docs
-      .map(d => ({ id: d.id, ...d.data({ serverTimestamps: "estimate" }) }))
-      .sort((a, b) => ms(a.createdAt) - ms(b.createdAt));
-    if (!T.lessons.length && !T.createdDefault){ T.createdDefault = true; createLesson("Lesson 1"); return; }
-    if (!curLesson()){
-      const saved = store.get("et_lesson");
-      const pick = T.lessons.find(l => l.id === saved) || T.lessons[0];
-      T.lessonId = pick ? pick.id : null;
-    }
-    renderLessons();
-    renderStage();
-  }, teacherErr));
-
-  T.unsubs.push(fs.onSnapshot(liveRef(), snap => {
-    const prev = T.live && T.live.qid;
-    T.live = snap.exists() ? snap.data() : null;
-    const now = T.live && T.live.qid;
-    if (now && now !== prev) setView(now);
-    else { renderLessons(); renderStage(); }
-  }, teacherErr));
-}
-
-function setView(qid){
-  T.viewQid = qid; T.reveal = false; T.responses = [];
-  if (T.unsubResp){ T.unsubResp(); T.unsubResp = null; }
-  if (qid){
-    T.unsubResp = fs.onSnapshot(
-      fs.query(fs.collection(db, "responses"), fs.where("qid", "==", qid)),
-      snap => { T.responses = snap.docs.map(d => d.data()); renderStage(); },
-      teacherErr
-    );
+  if (!T.stock.length){
+    try { T.stock = (await import("./questions.js")).STOCK; }
+    catch { notice("Couldn't load questions.js. Make sure it's uploaded next to index.html. You can still add your own questions."); }
   }
-  renderLessons();
-  renderStage();
+  T.unsubs.push(fs.onSnapshot(fs.collection(db, "bank"), snap => {
+    T.edits = new Map(snap.docs.map(d => [d.id, d.data()]));
+    renderBank();
+  }, teacherErr));
+  T.unsubs.push(fs.onSnapshot(fs.query(fs.collection(db, "runs"), fs.orderBy("at", "desc"), fs.limit(25)), snap => {
+    T.runs = snap.docs.map(d => ({ id: d.id, ...d.data({ serverTimestamps: "estimate" }) }));
+    if (!T.viewRun && T.live && T.live.run) setView(T.live.run);
+    else { renderRuns(); renderStage(); }
+  }, teacherErr));
+  T.unsubs.push(fs.onSnapshot(liveRef(), snap => {
+    const prev = T.live && T.live.run;
+    T.live = snap.exists() ? snap.data() : null;
+    const now = T.live && T.live.run;
+    if (now && now !== prev && (!T.viewRun || T.viewRun === prev)) setView(now);
+    else { renderBank(); renderRuns(); renderStage(); }
+  }, teacherErr));
+  cleanupOld();
+}
+// Quietly deletes responses and push history older than 30 days.
+async function cleanupOld(){
+  try {
+    const cutoff = fs.Timestamp.fromMillis(Date.now() - 30 * 864e5);
+    for (const col of ["responses", "runs"]){
+      const snap = await fs.getDocs(fs.query(fs.collection(db, col), fs.where("at", "<", cutoff), fs.limit(400)));
+      if (snap.empty) continue;
+      const batch = fs.writeBatch(db);
+      snap.docs.forEach(d => batch.delete(d.ref));
+      await batch.commit();
+    }
+  } catch {}
 }
 
-/* ----- lessons & question list ----- */
-function renderLessons(){
-  const sel = $("lessonSel");
+/* ----- question bank ----- */
+function allQuestions(){
+  const out = [];
+  const stockIds = new Set();
+  for (const q of T.stock){
+    stockIds.add(q.id);
+    const e = T.edits.get(q.id);
+    if (!e) out.push({ ...q, stock: true });
+    else if (e.deleted) out.push({ ...q, stock: true, deleted: true });
+    else out.push({ ...q, ...e, id: q.id, stock: true, edited: true });
+  }
+  for (const [id, e] of T.edits){
+    if (stockIds.has(id) || e.deleted) continue;
+    out.push({ ...e, id, custom: true });
+  }
+  return out;
+}
+function topicsOf(qs){
+  const seen = [];
+  qs.forEach(q => { if (q.topic && !seen.includes(q.topic)) seen.push(q.topic); });
+  return seen;
+}
+function filtered(includeDeleted){
+  return allQuestions().filter(q =>
+    (!T.topic || q.topic === T.topic) &&
+    (!T.level || q.level === T.level) &&
+    (includeDeleted ? true : !q.deleted));
+}
+
+function renderBank(){
+  const qs = allQuestions();
+  const topics = topicsOf(qs.filter(q => !q.deleted));
+  if (T.topic && !topics.includes(T.topic)) topics.push(T.topic);
+  const sel = $("topicSel");
   sel.innerHTML = "";
-  T.lessons.forEach(l => {
+  const allOpt = document.createElement("option");
+  allOpt.value = ""; allOpt.textContent = "All topics (" + qs.filter(q => !q.deleted).length + ")";
+  sel.appendChild(allOpt);
+  topics.forEach(t => {
     const o = document.createElement("option");
-    o.value = l.id; o.textContent = l.name || "Untitled";
+    o.value = t; o.textContent = t + " (" + qs.filter(q => q.topic === t && !q.deleted).length + ")";
     sel.appendChild(o);
   });
-  sel.value = T.lessonId || "";
-  const lesson = curLesson();
-  $("renameLesson").disabled = $("deleteLesson").disabled = $("addQ").disabled = !lesson;
+  sel.value = T.topic;
+  $("topicList").innerHTML = "";
+  topics.forEach(t => { const o = document.createElement("option"); o.value = t; $("topicList").appendChild(o); });
+  document.querySelectorAll("#lvlSeg button").forEach(b => b.classList.toggle("on", Number(b.dataset.l) === T.level));
+
   const list = $("qList");
   list.innerHTML = "";
-  if (!lesson) return;
-  const qs = lesson.questions || [];
-  if (!qs.length) list.innerHTML = '<li class="empty">No questions yet. Add one below.</li>';
-  qs.forEach((q, i) => {
+  const shown = filtered(T.showDeleted);
+  const live = T.live && T.live.run ? T.live.qid : null;
+  if (!shown.length) list.innerHTML = '<li class="empty">No questions here yet. Click + New to add one.</li>';
+  const sorted = [...shown].sort((a, b) => (a.level - b.level));
+  for (const q of sorted){
     const li = document.createElement("li");
-    li.className = "qitem" + (T.live && T.live.qid === q.id ? " is-live" : "") + (T.viewQid === q.id ? " is-view" : "");
-    li.innerHTML =
-      '<div class="qhead"><span class="qnum"></span><span class="qtype"></span><span class="livetag">● LIVE</span></div>' +
-      '<div class="qtext rich"></div>' +
-      '<div class="qactions">' +
-        '<button class="primary sm" data-a="push">Push ▶</button>' +
-        '<button class="sm" data-a="results">Results</button>' +
-        '<button class="sm" data-a="edit">Edit</button>' +
-        '<button class="sm icon" data-a="up" title="Move up">↑</button>' +
-        '<button class="sm icon" data-a="down" title="Move down">↓</button>' +
-        '<button class="sm icon danger" data-a="del" title="Delete question">✕</button>' +
-      '</div>';
-    li.querySelector(".qnum").textContent = i + 1;
-    li.querySelector(".qtype").textContent = q.type === "mc" ? "Multiple choice" : "Math answer";
-    rich(li.querySelector(".qtext"), q.prompt);
-    li.querySelector('[data-a="up"]').disabled = i === 0;
-    li.querySelector('[data-a="down"]').disabled = i === qs.length - 1;
-    li.querySelectorAll("[data-a]").forEach(b => b.onclick = () => qAction(b.dataset.a, i));
+    li.className = "qitem" + (q.id === live ? " is-live" : "") + (q.deleted ? " is-deleted" : "");
+    const head = document.createElement("div"); head.className = "qhead";
+    const lv = document.createElement("span"); lv.className = "lvl l" + q.level; lv.textContent = "●".repeat(q.level) + "○".repeat(3 - q.level) + " " + LEVELS[q.level];
+    const ty = document.createElement("span"); ty.className = "tag"; ty.textContent = q.type === "mc" ? "Multiple choice" : "Math answer";
+    head.append(lv, ty);
+    if (!T.topic){ const tp = document.createElement("span"); tp.className = "tag"; tp.textContent = q.topic; head.appendChild(tp); }
+    if (q.edited || q.custom){ const ed = document.createElement("span"); ed.className = "tag"; ed.textContent = q.custom ? "yours" : "edited"; head.appendChild(ed); }
+    const lt = document.createElement("span"); lt.className = "livetag"; lt.textContent = "● LIVE"; head.appendChild(lt);
+    const body = document.createElement("div"); body.className = "qbody";
+    promptEl(body, q.text, q.math);
+    const act = document.createElement("div"); act.className = "qactions";
+    if (q.deleted){
+      const r = document.createElement("button"); r.className = "sm"; r.textContent = "Restore";
+      r.onclick = () => fs.deleteDoc(fs.doc(db, "bank", q.id)).catch(teacherErr);
+      act.appendChild(r);
+    } else {
+      const p = document.createElement("button"); p.className = "primary sm"; p.textContent = "Push ▶";
+      p.onclick = () => pushQuestion(q);
+      const e = document.createElement("button"); e.className = "sm"; e.textContent = "Edit";
+      e.onclick = () => openEditor(q);
+      act.append(p, e);
+    }
+    li.append(head, body, act);
     list.appendChild(li);
+  }
+  const nDel = filtered(true).filter(q => q.deleted).length;
+  const sd = $("showDelBtn");
+  sd.hidden = !nDel && !T.showDeleted;
+  sd.textContent = T.showDeleted ? "Hide deleted questions" : "Show deleted questions (" + nDel + ")";
+}
+$("topicSel").onchange = e => { T.topic = e.target.value; store.set("et_topic", T.topic); renderBank(); };
+document.querySelectorAll("#lvlSeg button").forEach(b => b.onclick = () => {
+  T.level = Number(b.dataset.l); store.set("et_level", String(T.level)); renderBank();
+});
+$("showDelBtn").onclick = () => { T.showDeleted = !T.showDeleted; renderBank(); };
+$("randomBtn").onclick = () => {
+  const pool = filtered(false);
+  if (!pool.length) return alert("There are no questions to pick from with these filters.");
+  const recent = new Set(T.runs.slice(0, 12).map(r => r.qid));
+  const fresh = pool.filter(q => !recent.has(q.id));
+  const from = fresh.length ? fresh : pool;
+  pushQuestion(from[Math.floor(Math.random() * from.length)]);
+};
+$("newQBtn").onclick = () => openEditor(null);
+
+/* ----- pushing ----- */
+function shuffle(n){
+  const a = [...Array(n).keys()];
+  for (let k = n - 1; k > 0; k--){ const j = Math.floor(Math.random() * (k + 1)); [a[k], a[j]] = [a[j], a[k]]; }
+  return a;
+}
+async function pushQuestion(q){
+  const run = rid();
+  let choices = [], correct = q.correct ?? null;
+  if (q.type === "mc"){
+    const order = shuffle(q.choices.length);
+    choices = order.map(k => q.choices[k]);
+    correct = (q.correct === null || q.correct === undefined) ? null : order.indexOf(q.correct);
+  }
+  const base = { qid: q.id || null, type: q.type, text: q.text || "", math: q.math || "", choices };
+  try {
+    const batch = fs.writeBatch(db);
+    batch.set(fs.doc(db, "runs", run), { ...base, topic: q.topic || "", level: q.level || 0, correct, at: fs.serverTimestamp() });
+    batch.set(liveRef(), { ...base, run, open: true, pushedAt: fs.serverTimestamp() });
+    T.viewRun = null;
+    await batch.commit();
+    setView(run);
+  } catch (e){ teacherErr(e); }
+}
+
+/* ----- stage ----- */
+function setView(run){
+  T.viewRun = run; T.reveal = false; T.responses = []; T.quickKey = null;
+  if (T.unsubResp){ T.unsubResp(); T.unsubResp = null; }
+  if (run){
+    T.unsubResp = fs.onSnapshot(
+      fs.query(fs.collection(db, "responses"), fs.where("run", "==", run)),
+      snap => { T.responses = snap.docs.map(d => d.data()); renderStage(); },
+      teacherErr);
+  }
+  renderBank(); renderRuns(); renderStage();
+}
+function fmtTime(t){
+  try { return (t && t.toDate ? t.toDate() : new Date()).toLocaleString([], { weekday: "short", hour: "numeric", minute: "2-digit" }); }
+  catch { return ""; }
+}
+function renderRuns(){
+  const sel = $("runSel");
+  sel.innerHTML = "";
+  if (!T.runs.length){ sel.hidden = true; return; }
+  sel.hidden = false;
+  const liveRun = T.live && T.live.run;
+  T.runs.forEach(r => {
+    const o = document.createElement("option");
+    const plain = String(r.math || "")
+      .replace(/\\(?:left|right)(?![a-zA-Z])/g, "")
+      .replace(/\\frac\{([^{}]*)\}\{([^{}]*)\}/g, "($1)/($2)")
+      .replace(/\\sqrt\{([^{}]*)\}/g, "√($1)")
+      .replace(/\\text\{([^{}]*)\}/g, "$1")
+      .replace(/\\(?:le|leq)(?![a-zA-Z])/g, "≤").replace(/\\(?:ge|geq)(?![a-zA-Z])/g, "≥")
+      .replace(/\\infty/g, "∞").replace(/\\pm/g, "±").replace(/\\cdot/g, "·")
+      .replace(/\\[a-zA-Z]+/g, " ").replace(/[{}]/g, "").replace(/\s+/g, " ").trim();
+    const label = (r.text || "") + (plain ? " " + plain : "");
+    o.value = r.id;
+    o.textContent = (r.id === liveRun ? "● " : "") + fmtTime(r.at) + " · " + (r.topic ? r.topic + ": " : "") + label.slice(0, 50);
+    sel.appendChild(o);
   });
+  if (T.viewRun && T.runs.some(r => r.id === T.viewRun)) sel.value = T.viewRun;
 }
+$("runSel").onchange = e => setView(e.target.value);
 
-function saveQuestions(lesson, qs){
-  return fs.updateDoc(fs.doc(db, "lessons", lesson.id), { questions: qs, updatedAt: fs.serverTimestamp() }).catch(teacherErr);
-}
-
-async function qAction(a, i){
-  const lesson = curLesson();
-  if (!lesson) return;
-  const qs = [...(lesson.questions || [])];
-  const q = qs[i];
-  if (a === "push") return pushQ(q);
-  if (a === "results") return setView(q.id);
-  if (a === "edit") return openEditor(i);
-  if (a === "up" && i > 0){ [qs[i - 1], qs[i]] = [qs[i], qs[i - 1]]; return saveQuestions(lesson, qs); }
-  if (a === "down" && i < qs.length - 1){ [qs[i + 1], qs[i]] = [qs[i], qs[i + 1]]; return saveQuestions(lesson, qs); }
-  if (a === "del"){
-    if (!confirm("Delete question " + (i + 1) + "? Its responses stay in the database until you clear them.")) return;
-    qs.splice(i, 1);
-    if (T.editing && T.editing.index === i) closeEditor();
-    return saveQuestions(lesson, qs);
-  }
-}
-
-function pushQ(q){
-  return fs.setDoc(liveRef(), {
-    qid: q.id, type: q.type, prompt: q.prompt,
-    choices: q.type === "mc" ? q.choices : [],
-    open: true, pushedAt: fs.serverTimestamp()
-  }).then(() => setView(q.id)).catch(teacherErr);
-}
-
-function createLesson(name){
-  return fs.addDoc(fs.collection(db, "lessons"), {
-    name, questions: [], createdAt: fs.serverTimestamp(), updatedAt: fs.serverTimestamp()
-  }).then(ref => { T.lessonId = ref.id; store.set("et_lesson", ref.id); renderLessons(); }).catch(teacherErr);
-}
-
-$("lessonSel").onchange = e => { T.lessonId = e.target.value; store.set("et_lesson", T.lessonId); closeEditor(); renderLessons(); };
-$("newLesson").onclick = () => {
-  const name = prompt("Name for the new lesson:", "");
-  if (name && name.trim()) createLesson(name.trim());
-};
-$("renameLesson").onclick = () => {
-  const l = curLesson(); if (!l) return;
-  const name = prompt("Rename lesson:", l.name || "");
-  if (name && name.trim()) fs.updateDoc(fs.doc(db, "lessons", l.id), { name: name.trim() }).catch(teacherErr);
-};
-$("deleteLesson").onclick = () => {
-  const l = curLesson(); if (!l) return;
-  if (!confirm('Delete the lesson "' + (l.name || "Untitled") + '" and all its questions?')) return;
-  closeEditor();
-  T.lessonId = null;
-  fs.deleteDoc(fs.doc(db, "lessons", l.id)).catch(teacherErr);
-};
-$("addQ").onclick = () => openEditor(-1);
-
-/* ----- question editor ----- */
-function setEdType(type){
-  T.editing.type = type;
-  document.querySelectorAll("#edType button").forEach(b => b.classList.toggle("on", b.dataset.type === type));
-  $("edMc").hidden = type !== "mc";
-  $("edMath").hidden = type !== "math";
-}
-document.querySelectorAll("#edType button").forEach(b => b.onclick = () => setEdType(b.dataset.type));
-
-function relabelChoices(){
-  const rows = [...$("edChoices").children];
-  rows.forEach((r, i) => r.querySelector(".letter").textContent = LETTERS[i]);
-  $("edAddChoice").hidden = rows.length >= LETTERS.length;
-}
-function addChoiceRow(text, isCorrect){
-  const box = $("edChoices");
-  if (box.children.length >= LETTERS.length) return;
-  const row = document.createElement("div");
-  row.className = "choicerow" + (isCorrect ? " correct" : "");
-  row.innerHTML = '<button class="mark sm" title="Mark as correct">✓</button><span class="letter"></span><input type="text" placeholder="Choice (math in $ $ works too)"><button class="sm icon" title="Remove choice">✕</button>';
-  row.querySelector("input").value = text || "";
-  const [mark, , , remove] = row.children;
-  mark.onclick = () => {
-    const was = row.classList.contains("correct");
-    [...box.children].forEach(r => r.classList.remove("correct"));
-    if (!was) row.classList.add("correct");
-  };
-  remove.onclick = () => { if (box.children.length > 2){ row.remove(); relabelChoices(); } };
-  box.appendChild(row);
-  relabelChoices();
-}
-$("edAddChoice").onclick = () => addChoiceRow("", false);
-$("edPrompt").oninput = () => rich($("edPreview"), $("edPrompt").value);
-
-function openEditor(index){
-  const lesson = curLesson(); if (!lesson) return;
-  const q = index >= 0 ? lesson.questions[index] : { type: "mc", prompt: "", choices: ["", "", "", ""], correct: null };
-  T.editing = { index, id: q.id || null, type: q.type };
-  $("editor").hidden = false;
-  $("edTitle").textContent = index >= 0 ? "Edit question " + (index + 1) : "New question";
-  $("edPrompt").value = q.prompt || "";
-  rich($("edPreview"), q.prompt || "");
-  setEdType(q.type);
-  $("edChoices").innerHTML = "";
-  const choices = q.type === "mc" && q.choices && q.choices.length ? q.choices : ["", "", "", ""];
-  choices.forEach((c, i) => addChoiceRow(c, q.type === "mc" && q.correct === i));
-  if (customElements.get("math-field")) $("edCorrect").value = q.type === "math" ? (q.correct || "") : "";
-  $("editor").scrollIntoView({ behavior: "smooth", block: "nearest" });
-  $("edPrompt").focus();
-}
-function closeEditor(){ T.editing = null; $("editor").hidden = true; }
-$("edCancel").onclick = closeEditor;
-
-$("edSave").onclick = async () => {
-  const lesson = curLesson(); const E = T.editing;
-  if (!lesson || !E) return;
-  const promptText = $("edPrompt").value.trim();
-  if (!promptText){ alert("Type the question first."); return; }
-  const q = { id: E.id || rid(), type: E.type, prompt: promptText };
-  if (E.type === "mc"){
-    const rows = [...$("edChoices").children]
-      .map(r => ({ t: r.querySelector("input").value.trim(), c: r.classList.contains("correct") }))
-      .filter(r => r.t);
-    if (rows.length < 2){ alert("Add at least two choices."); return; }
-    q.choices = rows.map(r => r.t);
-    const ci = rows.findIndex(r => r.c);
-    q.correct = ci >= 0 ? ci : null;
-  } else {
-    q.choices = [];
-    q.correct = (customElements.get("math-field") ? $("edCorrect").value : "").trim();
-  }
-  const qs = [...(lesson.questions || [])];
-  if (E.index >= 0) qs[E.index] = q; else qs.push(q);
-  $("edSave").disabled = true;
-  await saveQuestions(lesson, qs);
-  if (T.live && T.live.qid === q.id){
-    await fs.setDoc(liveRef(), { type: q.type, prompt: q.prompt, choices: q.choices }, { merge: true }).catch(teacherErr);
-  }
-  $("edSave").disabled = false;
-  closeEditor();
-};
-
-/* ----- stage: live tally ----- */
 function barRow(labelNode, count, max){
   const row = document.createElement("div");
   row.className = "row";
@@ -811,155 +989,275 @@ function barRow(labelNode, count, max){
   requestAnimationFrame(() => { row.querySelector(".fill").style.width = pct + "%"; });
   return row;
 }
+function mcLabel(i, c){
+  const frag = document.createElement("span");
+  frag.style.display = "contents";
+  const L = document.createElement("b"); L.textContent = LETTERS[i];
+  frag.append(L, mathEl(c));
+  return frag;
+}
 
 function renderStage(){
   const tally = $("tTally");
   tally.innerHTML = "";
-  const isLive = !!(T.live && T.live.qid && T.live.qid === T.viewQid);
-  const q = (T.viewQid && findQ(T.viewQid)) || (isLive ? { ...T.live, id: T.live.qid, correct: null } : null);
+  const r = T.viewRun && T.runs.find(x => x.id === T.viewRun);
+  const liveRun = T.live && T.live.run;
+  const isLive = !!(r && r.id === liveRun);
+  $("stageTools").hidden = !r;
   const badge = $("liveBadge");
-  $("stageTools").hidden = !q;
-  if (!q){
+  if (!r){
     badge.className = "badge"; badge.textContent = "";
-    $("tPrompt").textContent = ""; $("respCount").textContent = "";
-    tally.innerHTML = '<p class="empty">Push a question to your class and responses will show up here.</p>';
-    T.quickKey = null; $("quick").innerHTML = "";
+    $("respCount").textContent = "";
+    $("tPrompt").textContent = "";
+    tally.innerHTML = '<p class="empty">Pick a question and press Push ▶, or hit 🎲 Push random. Students\' screens update right away.</p>';
+    $("quick").innerHTML = ""; T.quickKey = null;
     return;
   }
-  badge.textContent = isLive ? (T.live.open ? "● LIVE" : "CLOSED") : "RESULTS";
+  badge.textContent = isLive ? (T.live.open ? "● LIVE" : "CLOSED") : "EARLIER";
   badge.className = "badge " + (isLive ? (T.live.open ? "live" : "closed") : "");
-  rich($("tPrompt"), q.prompt);
+  promptEl($("tPrompt"), r.text, r.math);
   const n = T.responses.length;
   $("respCount").textContent = n + (n === 1 ? " response" : " responses");
 
-  const hasCorrect = q.type === "mc" ? (q.correct !== null && q.correct !== undefined) : !!q.correct;
+  const hasCorrect = r.type === "mc" ? (r.correct !== null && r.correct !== undefined) : !!r.correct;
+  $("hideBtn").textContent = T.hide ? "Show answers" : "Hide answers";
   $("revealBtn").disabled = !hasCorrect || T.hide;
   $("revealBtn").textContent = T.reveal ? "Hide correct" : "Show correct";
-  $("hideBtn").textContent = T.hide ? "Show answers" : "Hide answers";
-  $("openBtn").disabled = $("clearScreenBtn").disabled = !isLive;
+  $("openBtn").hidden = $("clearScreenBtn").hidden = !isLive;
   $("openBtn").textContent = isLive && !T.live.open ? "Reopen submissions" : "Close submissions";
-  $("clearRespBtn").disabled = n === 0;
+  $("againBtn").textContent = isLive ? "Push again (fresh tally)" : "Push this again ▶";
+  $("quick").hidden = !isLive;
+
   if (T.hide){
-    // Answers hidden: show the choices with no bars or counts, and no student answers at all.
-    if (q.type === "mc"){
-      (q.choices || []).forEach((c, i) => {
-        const lab = document.createElement("div");
-        lab.className = "mclabel";
-        const L = document.createElement("b"); L.textContent = LETTERS[i];
-        const t = document.createElement("span"); t.className = "rich"; rich(t, c);
-        lab.append(L, t);
-        const row = barRow(lab, 0, 1);
-        row.querySelector(".count").textContent = "";
-        tally.appendChild(row);
-      });
-    }
+    if (r.type === "mc") (r.choices || []).forEach((c, i) => {
+      const row = barRow(mcLabel(i, c), 0, 1);
+      row.querySelector(".count").textContent = "";
+      tally.appendChild(row);
+    });
     const p = document.createElement("p");
     p.className = "hidden-note";
-    p.textContent = "Answers are hidden. Click Show answers to reveal the results.";
+    p.textContent = "Answers are hidden. Click Show answers when you're ready.";
     tally.appendChild(p);
-    renderQuick(q);
+    if (isLive) renderQuick(r);
     return;
   }
 
-  if (q.type === "mc"){
-    const choices = q.choices || [];
-    const counts = choices.map(() => 0);
-    T.responses.forEach(r => { const k = LETTERS.indexOf(r.answer); if (k >= 0 && k < counts.length) counts[k]++; });
+  if (r.type === "mc"){
+    const counts = (r.choices || []).map(() => 0);
+    T.responses.forEach(x => { const k = LETTERS.indexOf(x.answer); if (k >= 0 && k < counts.length) counts[k]++; });
     const max = Math.max(1, ...counts);
-    choices.forEach((c, i) => {
-      const lab = document.createElement("div");
-      lab.className = "mclabel";
-      const L = document.createElement("b"); L.textContent = LETTERS[i];
-      const t = document.createElement("span"); t.className = "rich"; rich(t, c);
-      lab.append(L, t);
-      const row = barRow(lab, counts[i], max);
-      if (T.reveal && q.correct === i) row.classList.add("correct");
+    (r.choices || []).forEach((c, i) => {
+      const row = barRow(mcLabel(i, c), counts[i], max);
+      if (T.reveal && r.correct === i) row.classList.add("correct");
       tally.appendChild(row);
     });
   } else {
     const groups = new Map();
-    T.responses.forEach(r => {
-      const k = answerKey(r.answer);
-      const g = groups.get(k) || { latex: r.answer, count: 0 };
+    T.responses.forEach(x => {
+      const k = answerKey(x.answer);
+      const g = groups.get(k) || { count: 0, forms: new Map() };
       g.count++;
+      const f = normLatex(x.answer);
+      g.forms.set(f, { latex: x.answer, n: ((g.forms.get(f) || {}).n || 0) + 1 });
       groups.set(k, g);
     });
-    const ck = q.correct ? answerKey(q.correct) : null;
+    const ck = r.correct ? answerKey(r.correct) : null;
     const sorted = [...groups.entries()].sort((a, b) => b[1].count - a[1].count);
     if (!sorted.length) tally.innerHTML = '<p class="empty">No answers yet.</p>';
     const max = sorted.length ? sorted[0][1].count : 1;
     sorted.forEach(([k, g]) => {
-      const row = barRow(mathEl(g.latex), g.count, max);
+      const forms = [...g.forms.values()].sort((a, b) => b.n - a.n);
+      const lab = document.createElement("span");
+      lab.style.display = "contents";
+      lab.appendChild(mathEl(forms[0].latex));
+      if (forms.length > 1){
+        const v = document.createElement("span");
+        v.className = "variants";
+        v.append("also written as: ");
+        forms.slice(1, 4).forEach((f, j) => { if (j) v.append(",  "); v.appendChild(mathEl(f.latex)); });
+        if (forms.length > 4) v.append("  …");
+        lab.appendChild(v);
+      }
+      const row = barRow(lab, g.count, max);
       if (T.reveal && ck === k) row.classList.add("correct");
       tally.appendChild(row);
     });
   }
-  renderQuick(q);
+  if (isLive) renderQuick(r);
 }
 
-function addQuick(answer){
-  if (!T.viewQid || !answer) return Promise.resolve();
-  return fs.addDoc(fs.collection(db, "responses"), { qid: T.viewQid, answer, source: "teacher", at: fs.serverTimestamp() }).catch(teacherErr);
-}
-function renderQuick(q){
-  const key = q.id + "|" + q.type + "|" + (q.choices || []).length;
+function renderQuick(r){
+  const key = r.id;
   if (T.quickKey === key) return;
   T.quickKey = key;
   const box = $("quick");
   box.innerHTML = '<span class="small">Add an answer for a student without a laptop:</span>';
-  if (q.type === "mc"){
-    (q.choices || []).forEach((_, i) => {
+  const add = answer => fs.addDoc(fs.collection(db, "responses"), { run: r.id, answer, source: "teacher", at: fs.serverTimestamp() }).catch(teacherErr);
+  if (r.type === "mc"){
+    (r.choices || []).forEach((_, i) => {
       const b = document.createElement("button");
-      b.className = "sm";
-      b.textContent = "+" + LETTERS[i];
-      b.onclick = async () => { b.disabled = true; await addQuick(LETTERS[i]); b.disabled = false; };
+      b.className = "sm"; b.textContent = "+" + LETTERS[i];
+      b.onclick = async () => { b.disabled = true; await add(LETTERS[i]); b.disabled = false; };
       box.appendChild(b);
     });
   } else {
-    const m = document.createElement("math-field");
-    m.setAttribute("math-virtual-keyboard-policy", "auto");
+    const m = mathInput("");
     const b = document.createElement("button");
     b.className = "sm"; b.textContent = "Add";
-    b.onclick = async () => {
-      const v = (m.value || "").trim();
-      if (!v) return;
-      b.disabled = true; await addQuick(v); m.value = ""; b.disabled = false;
-    };
+    b.onclick = async () => { const v = valOf(m); if (!v) return; b.disabled = true; await add(v); m.value = ""; b.disabled = false; };
     box.append(m, b);
   }
 }
 
-T.hide = store.get("et_hide") === "1";
 $("hideBtn").onclick = () => { T.hide = !T.hide; store.set("et_hide", T.hide ? "1" : "0"); renderStage(); };
 $("revealBtn").onclick = () => { T.reveal = !T.reveal; renderStage(); };
-$("openBtn").onclick = () => {
-  if (!T.live || !T.live.qid) return;
-  fs.setDoc(liveRef(), { open: !T.live.open }, { merge: true }).catch(teacherErr);
-};
-$("clearScreenBtn").onclick = () => {
-  fs.setDoc(liveRef(), { qid: null, open: false }, { merge: true }).catch(teacherErr);
-};
-$("clearRespBtn").onclick = async () => {
-  const n = T.responses.length;
-  if (!T.viewQid || !n) return;
-  if (!confirm("Delete all " + n + " responses to this question?")) return;
-  try {
-    const snap = await fs.getDocs(fs.query(fs.collection(db, "responses"), fs.where("qid", "==", T.viewQid)));
-    const docs = snap.docs;
-    for (let k = 0; k < docs.length; k += 400){
-      const batch = fs.writeBatch(db);
-      docs.slice(k, k + 400).forEach(d => batch.delete(d.ref));
-      await batch.commit();
-    }
-  } catch (e){ teacherErr(e); }
+$("openBtn").onclick = () => { if (T.live && T.live.run) fs.setDoc(liveRef(), { open: !T.live.open }, { merge: true }).catch(teacherErr); };
+$("clearScreenBtn").onclick = () => fs.setDoc(liveRef(), { run: null, open: false }, { merge: true }).catch(teacherErr);
+$("againBtn").onclick = () => {
+  const r = T.runs.find(x => x.id === T.viewRun);
+  if (!r) return;
+  const fromBank = r.qid && allQuestions().find(q => q.id === r.qid && !q.deleted);
+  pushQuestion(fromBank || { ...r, id: r.qid });
 };
 $("presentBtn").onclick = () => {
   const on = document.body.classList.toggle("present");
   $("presentBtn").textContent = on ? "Exit present mode" : "Present mode";
 };
 
+/* ----- editor ----- */
+const textRe = /^\\text\{([^{}]*)\}$/;
+function setSeg(id, attr, val){ document.querySelectorAll("#" + id + " button").forEach(b => b.classList.toggle("on", b.dataset[attr] === String(val))); }
+function relabel(){
+  const rows = [...$("edChoices").children];
+  rows.forEach((r, i) => r.querySelector(".letter").textContent = LETTERS[i]);
+  $("edAddChoice").hidden = rows.length >= LETTERS.length;
+}
+function choiceRow(latex, isCorrect){
+  const box = $("edChoices");
+  if (box.children.length >= LETTERS.length) return;
+  const row = document.createElement("div");
+  row.className = "choicerow" + (isCorrect ? " correct" : "");
+  const mark = document.createElement("button"); mark.className = "mark sm"; mark.textContent = "✓"; mark.title = "Mark as correct";
+  const letter = document.createElement("span"); letter.className = "letter";
+  const slot = document.createElement("div"); slot.className = "slot";
+  const mode = document.createElement("button"); mode.className = "mode sm"; mode.title = "Switch between math and words";
+  const del = document.createElement("button"); del.className = "sm"; del.textContent = "✕"; del.title = "Remove choice";
+  const m = textRe.exec(latex || "");
+  const setMode = (words, value) => {
+    row.dataset.words = words ? "1" : "";
+    slot.innerHTML = "";
+    let inp;
+    if (words){ inp = document.createElement("input"); inp.type = "text"; inp.value = value || ""; inp.placeholder = "Words, like No solution"; }
+    else inp = mathInput(value || "");
+    slot.appendChild(inp);
+    mode.textContent = words ? "math" : "abc";
+  };
+  setMode(!!m, m ? m[1] : latex);
+  mode.onclick = () => setMode(!row.dataset.words, "");
+  mark.onclick = () => {
+    const was = row.classList.contains("correct");
+    [...box.children].forEach(x => x.classList.remove("correct"));
+    if (!was) row.classList.add("correct");
+  };
+  del.onclick = () => { if (box.children.length > 2){ row.remove(); relabel(); } };
+  row.append(mark, letter, slot, mode, del);
+  box.appendChild(row);
+  relabel();
+}
+function readChoice(row){
+  const v = valOf(row.querySelector(".slot > *"));
+  if (!v) return "";
+  return row.dataset.words ? "\\text{" + v.replace(/[{}\\]/g, "") + "}" : v;
+}
+function setEdType(t){
+  T.editing.type = t;
+  setSeg("edType", "t", t);
+  $("edMcWrap").hidden = t !== "mc";
+  $("edMathWrap").hidden = t !== "math";
+}
+document.querySelectorAll("#edType button").forEach(b => b.onclick = () => setEdType(b.dataset.t));
+document.querySelectorAll("#edLevel button").forEach(b => b.onclick = () => { T.editing.level = Number(b.dataset.l); setSeg("edLevel", "l", b.dataset.l); });
+$("edAddChoice").onclick = () => choiceRow("", false);
+
+function openEditor(q){
+  const isNew = !q;
+  q = q || { topic: T.topic || "", level: T.level || 1, type: "mc", text: "", math: "", choices: ["", "", "", ""], correct: 0 };
+  T.editing = { q, isNew, type: q.type, level: q.level || 1 };
+  $("edTitle").textContent = isNew ? "New question" : "Edit question";
+  $("edSub").textContent = q.stock && !q.edited ? "This is a stock question. Your changes are saved to your bank, and you can reset it later." : "";
+  $("edTopic").value = q.topic || "";
+  setSeg("edLevel", "l", T.editing.level);
+  $("edText").value = q.text || "";
+  const ms = $("edMathSlot"); ms.innerHTML = ""; ms.appendChild(mathInput(q.math || ""));
+  $("edChoices").innerHTML = "";
+  const ch = q.type === "mc" && q.choices && q.choices.length ? q.choices : ["", "", "", ""];
+  ch.forEach((c, i) => choiceRow(c, q.type === "mc" && q.correct === i));
+  const cs = $("edCorrectSlot"); cs.innerHTML = ""; cs.appendChild(mathInput(q.type === "math" ? (q.correct || "") : ""));
+  setEdType(q.type);
+  $("edDelete").hidden = isNew;
+  $("edDelete").textContent = "Delete";
+  $("edReset").hidden = !q.edited;
+  $("edOverlay").hidden = false;
+  setTimeout(() => $("edText").focus(), 50);
+}
+function closeEditor(){ T.editing = null; $("edOverlay").hidden = true; }
+$("edCancel").onclick = closeEditor;
+
+function collectEditor(){
+  const E = T.editing;
+  const topic = $("edTopic").value.trim();
+  const text = $("edText").value.trim();
+  const math = valOf($("edMathSlot").firstChild);
+  if (!topic){ alert("Give the question a topic."); return null; }
+  if (!text && !math){ alert("Add directions, math, or both."); return null; }
+  const q = { topic, level: E.level, type: E.type, text, math };
+  if (E.type === "mc"){
+    const rows = [...$("edChoices").children].map(r => ({ v: readChoice(r), c: r.classList.contains("correct") })).filter(r => r.v);
+    if (rows.length < 2){ alert("Add at least two choices."); return null; }
+    q.choices = rows.map(r => r.v);
+    const ci = rows.findIndex(r => r.c);
+    q.correct = ci >= 0 ? ci : null;
+  } else {
+    q.choices = [];
+    q.correct = valOf($("edCorrectSlot").firstChild);
+  }
+  return q;
+}
+async function saveEditor(andPush){
+  const E = T.editing; if (!E) return;
+  const q = collectEditor(); if (!q) return;
+  const id = E.isNew ? "c_" + rid() : E.q.id;
+  const data = { ...q, updatedAt: fs.serverTimestamp() };
+  if (E.isNew || E.q.custom) data.custom = true;
+  $("edSave").disabled = $("edSavePush").disabled = true;
+  try {
+    await fs.setDoc(fs.doc(db, "bank", id), data);
+    if (T.topic && T.topic !== q.topic){ T.topic = q.topic; store.set("et_topic", T.topic); }
+    closeEditor();
+    if (andPush) pushQuestion({ ...q, id });
+  } catch (e){ teacherErr(e); }
+  $("edSave").disabled = $("edSavePush").disabled = false;
+}
+$("edSave").onclick = () => saveEditor(false);
+$("edSavePush").onclick = () => saveEditor(true);
+$("edReset").onclick = async () => {
+  const E = T.editing; if (!E || !E.q.edited) return;
+  if (!confirm("Undo your changes and go back to the original question?")) return;
+  try { await fs.deleteDoc(fs.doc(db, "bank", E.q.id)); closeEditor(); } catch (e){ teacherErr(e); }
+};
+$("edDelete").onclick = async () => {
+  const E = T.editing; if (!E || E.isNew) return;
+  const q = E.q;
+  if (!confirm(q.custom ? "Delete this question permanently?" : "Remove this question from your bank? You can restore it later from \"Show deleted questions\".")) return;
+  try {
+    if (q.custom) await fs.deleteDoc(fs.doc(db, "bank", q.id));
+    else await fs.setDoc(fs.doc(db, "bank", q.id), { deleted: true, updatedAt: fs.serverTimestamp() });
+    closeEditor();
+  } catch (e){ teacherErr(e); }
+};
+
 customElements.whenDefined("math-field").then(() => {
-  if (isTeacher && T.unsubs.length){ T.quickKey = null; renderLessons(); renderStage(); }
+  if (isTeacher && T.unsubs.length){ T.quickKey = null; renderBank(); renderStage(); }
 });
 
 init();

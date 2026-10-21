@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------------------------------------------------------
+    // Teacher PIN. The PIN is "1234" until you change it the first time
+    // you open the teacher view. It is stored in config/pin, which only
+    // a signed-in teacher can read. Changing the PIN signs out every
+    // other device that used the old one.
+    // ---------------------------------------------------------------
+    function cfg() { return /databases/$(database)/documents/config/pin; }
+
+    function pinMatchesNow(pin) {
+      return (exists(cfg()) && get(cfg()).data.pin == pin)
+          || (!exists(cfg()) && pin == "1234");
+    }
+    function pinMatchesAfter(pin) {
+      return (existsAfter(cfg()) && getAfter(cfg()).data.pin == pin)
+          || (!existsAfter(cfg()) && pin == "1234");
+    }
+    function session() {
+      return /databases/$(database)/documents/sessions/$(request.auth.uid);
+    }
+    function isTeacher() {
+      return request.auth != null
+        && exists(session())
+        && pinMatchesNow(get(session()).data.pin);
+    }
+
+    // A browser becomes "teacher" by saving the correct PIN under its own id.
+    match /sessions/{uid} {
+      allow create, update: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(["pin", "at"])
+        && request.resource.data.pin is string
+        && pinMatchesAfter(request.resource.data.pin);
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+
+    match /config/pin {
+      allow read: if isTeacher();
+      allow write: if isTeacher()
+        && request.resource.data.keys().hasOnly(["pin"])
+        && request.resource.data.pin is string
+        && request.resource.data.pin.size() >= 4
+        && request.resource.data.pin.size() <= 20
+        && request.resource.data.pin != "1234";
+    }
+
+    // The question on students' screens. Anyone can see it; only the teacher changes it.
+    match /state/live {
+      allow read: if true;
+      allow write: if isTeacher();
+    }
+
+    // Your edits to the question bank, your own questions, and push history.
+    match /bank/{id} {
+      allow read, write: if isTeacher();
+    }
+    match /runs/{id} {
+      allow read, write: if isTeacher();
+    }
+
+    // Student answers: students can only add one, only to the open live question.
+    match /responses/{id} {
+      allow create: if request.resource.data.keys().hasOnly(["run", "answer", "source", "at"])
+        && request.resource.data.run is string
+        && request.resource.data.answer is string
+        && request.resource.data.answer.size() > 0
+        && request.resource.data.answer.size() <= 300
+        && request.resource.data.at == request.time
+        && (
+          isTeacher()
+          || (request.resource.data.source == "student"
+              && get(/databases/$(database)/documents/state/live).data.run == request.resource.data.run
+              && get(/databases/$(database)/documents/state/live).data.open == true)
+        );
+      allow read, delete: if isTeacher();
+    }
+  }
+}

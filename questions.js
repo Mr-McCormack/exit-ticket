@@ -112,6 +112,651 @@ export const STOCK = [
   "correct": 0
  },
  {
+  "id": "dist-1",
+  "topic": "Linear Equations: Distributing",
+  "level": 1,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "3(x+4)=27",
+  "choices": [
+   "x=5",
+   "x=\\frac{23}{3}",
+   "x=-5",
+   "x=13"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-2",
+  "topic": "Linear Equations: Distributing",
+  "level": 1,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "5(x-2)=20",
+  "choices": [],
+  "correct": "6"
+ },
+ {
+  "id": "dist-3",
+  "topic": "Linear Equations: Distributing",
+  "level": 1,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "2(x+7)=10",
+  "choices": [
+   "x=-2",
+   "x=\\frac{3}{2}",
+   "x=2",
+   "x=12"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-4",
+  "topic": "Linear Equations: Distributing",
+  "level": 1,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "4(2x-1)=28",
+  "choices": [],
+  "correct": "4"
+ },
+ {
+  "id": "dist-5",
+  "topic": "Linear Equations: Distributing",
+  "level": 1,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "6(x+3)=18",
+  "choices": [],
+  "correct": "0"
+ },
+ {
+  "id": "dist-6",
+  "topic": "Linear Equations: Distributing",
+  "level": 1,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "7(x-5)=-14",
+  "choices": [
+   "x=3",
+   "x=-\\frac{9}{7}",
+   "x=-3",
+   "x=-7"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-7",
+  "topic": "Linear Equations: Distributing",
+  "level": 2,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-2(x+5)=8",
+  "choices": [
+   "x=-9",
+   "x=1",
+   "x=9",
+   "x=-\\frac{3}{2}"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-8",
+  "topic": "Linear Equations: Distributing",
+  "level": 2,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-3(x-4)=21",
+  "choices": [
+   "x=-3",
+   "x=-11",
+   "x=3",
+   "x=-\\frac{25}{3}"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-9",
+  "topic": "Linear Equations: Distributing",
+  "level": 2,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "-4(2x-3)=36",
+  "choices": [],
+  "correct": "-3"
+ },
+ {
+  "id": "dist-10",
+  "topic": "Linear Equations: Distributing",
+  "level": 2,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-(x-6)=10",
+  "choices": [
+   "x=-4",
+   "x=-16",
+   "x=4",
+   "x=-3"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-11",
+  "topic": "Linear Equations: Distributing",
+  "level": 2,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "2(x-3)+5=17",
+  "choices": [],
+  "correct": "9"
+ },
+ {
+  "id": "dist-12",
+  "topic": "Linear Equations: Distributing",
+  "level": 2,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "3(2x+1)-4=17",
+  "choices": [
+   "x=3",
+   "x=\\frac{10}{3}",
+   "x=-3",
+   "x=\\frac{8}{3}"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-13",
+  "topic": "Linear Equations: Distributing",
+  "level": 2,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "8-2(x+1)=0",
+  "choices": [
+   "x=3",
+   "x=5",
+   "x=\\frac{9}{2}",
+   "x=-3"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-14",
+  "topic": "Linear Equations: Distributing",
+  "level": 2,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "10-(x+4)=1",
+  "choices": [],
+  "correct": "5"
+ },
+ {
+  "id": "dist-15",
+  "topic": "Linear Equations: Distributing",
+  "level": 2,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "\\frac{1}{2}(4x-6)=9",
+  "choices": [],
+  "correct": "6"
+ },
+ {
+  "id": "dist-16",
+  "topic": "Linear Equations: Distributing",
+  "level": 2,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-5(3-x)=10",
+  "choices": [
+   "x=5",
+   "x=-1",
+   "x=-5",
+   "x=\\frac{7}{5}"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-17",
+  "topic": "Linear Equations: Distributing",
+  "level": 3,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "4(x+2)+3(x-1)=33",
+  "choices": [],
+  "correct": "4"
+ },
+ {
+  "id": "dist-18",
+  "topic": "Linear Equations: Distributing",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "5(x-1)-2(x+3)=10",
+  "choices": [
+   "x=7",
+   "x=3",
+   "x=-7",
+   "x=\\frac{8}{3}"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-19",
+  "topic": "Linear Equations: Distributing",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-3(x+2)-2(x-4)=-23",
+  "choices": [
+   "x=5",
+   "x=\\frac{21}{5}",
+   "x=-5",
+   "x=6"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-20",
+  "topic": "Linear Equations: Distributing",
+  "level": 3,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "6-3(2x-4)=-6",
+  "choices": [],
+  "correct": "4"
+ },
+ {
+  "id": "dist-21",
+  "topic": "Linear Equations: Distributing",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-2(3x-1)-(x+5)=11",
+  "choices": [
+   "x=-2",
+   "x=-\\frac{8}{7}",
+   "x=2",
+   "x=-1"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-22",
+  "topic": "Linear Equations: Distributing",
+  "level": 3,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "\\frac{2}{3}(6x-9)+1=11",
+  "choices": [],
+  "correct": "4"
+ },
+ {
+  "id": "dist-23",
+  "topic": "Linear Equations: Distributing",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-\\frac{1}{4}(8x+12)=5",
+  "choices": [
+   "x=-4",
+   "x=-1",
+   "x=4",
+   "x=\\frac{7}{2}"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "dist-24",
+  "topic": "Linear Equations: Distributing",
+  "level": 3,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "3(x-2)-(x+8)=0",
+  "choices": [],
+  "correct": "7"
+ },
+ {
+  "id": "both-1",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 1,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "5x+3=2x+18",
+  "choices": [
+   "x=5",
+   "x=7",
+   "x=-5",
+   "x=\\frac{15}{7}"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-2",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 1,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "7x-4=3x+12",
+  "choices": [],
+  "correct": "4"
+ },
+ {
+  "id": "both-3",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 1,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "2x+9=5x",
+  "choices": [
+   "x=3",
+   "x=-3",
+   "x=-\\frac{9}{7}",
+   "x=4"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-4",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 1,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "4x-7=x+8",
+  "choices": [],
+  "correct": "5"
+ },
+ {
+  "id": "both-5",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 1,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "9-x=x+1",
+  "choices": [
+   "x=4",
+   "x=-5",
+   "x=-4",
+   "x=5"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-6",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 1,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "6x+5=2x-11",
+  "choices": [],
+  "correct": "-4"
+ },
+ {
+  "id": "both-7",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 2,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-3x+8=2x-12",
+  "choices": [
+   "x=4",
+   "x=\\frac{4}{5}",
+   "x=-4",
+   "x=20"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-8",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 2,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "3(x+2)=x+14",
+  "choices": [],
+  "correct": "4"
+ },
+ {
+  "id": "both-9",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 2,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "4(x-3)=2x+6",
+  "choices": [
+   "x=9",
+   "x=\\frac{9}{2}",
+   "x=-9",
+   "x=-3"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-10",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 2,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "5x-2=-2(x+8)",
+  "choices": [
+   "x=-2",
+   "x=\\frac{18}{7}",
+   "x=2",
+   "x=\\frac{10}{7}"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-11",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 2,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "-4(x-1)=x-11",
+  "choices": [],
+  "correct": "3"
+ },
+ {
+  "id": "both-12",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 2,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "2(3x-5)=4x+2",
+  "choices": [
+   "x=6",
+   "x=\\frac{7}{2}",
+   "x=-6",
+   "x=-4"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-13",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 2,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "8-(x+2)=2x-9",
+  "choices": [],
+  "correct": "5"
+ },
+ {
+  "id": "both-14",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 2,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "3x-(x-5)=x+9",
+  "choices": [
+   "x=4",
+   "x=14",
+   "x=-4",
+   "x=\\frac{4}{3}"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-15",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "3(x+4)=5(x-2)+4",
+  "choices": [],
+  "correct": "9"
+ },
+ {
+  "id": "both-16",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-2(x-3)=4(x+6)",
+  "choices": [
+   "x=-3",
+   "x=-5",
+   "x=3",
+   "x=-\\frac{3}{2}"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-17",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "4(2x-1)-3x=2(x+7)",
+  "choices": [],
+  "correct": "6"
+ },
+ {
+  "id": "both-18",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-3(x+1)+2x=5-2(x+4)",
+  "choices": [
+   "x=0",
+   "x=10",
+   "x=8",
+   "x=-6"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-19",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "5(x-2)-2(x+1)=-(x-4)",
+  "choices": [
+   "x=4",
+   "x=1",
+   "x=-4",
+   "x=-\\frac{3}{4}"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-20",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "\\frac{1}{2}(6x-4)=\\frac{1}{3}(9x+3)-x",
+  "choices": [],
+  "correct": "3"
+ },
+ {
+  "id": "both-21",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "math",
+  "text": "Solve for x.",
+  "math": "2(x+3)-x=3(x-4)+4",
+  "choices": [],
+  "correct": "7"
+ },
+ {
+  "id": "both-22",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-6(x-2)=-2(3x-6)",
+  "choices": [
+   "\\text{All real numbers}",
+   "\\text{No solution}",
+   "x=0",
+   "x=1"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-23",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "3(2x-1)=6x+5",
+  "choices": [
+   "\\text{No solution}",
+   "\\text{All real numbers}",
+   "x=0",
+   "x=1"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-24",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "4(x+2)-x=3(x+1)+5",
+  "choices": [
+   "\\text{All real numbers}",
+   "\\text{No solution}",
+   "x=0",
+   "x=1"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-25",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "-(x-7)=-x+2",
+  "choices": [
+   "\\text{No solution}",
+   "\\text{All real numbers}",
+   "x=0",
+   "x=1"
+  ],
+  "correct": 0
+ },
+ {
+  "id": "both-26",
+  "topic": "Linear Equations: Variables on Both Sides",
+  "level": 3,
+  "type": "mc",
+  "text": "Solve for x.",
+  "math": "5x-2(x+3)=3(x-2)",
+  "choices": [
+   "\\text{All real numbers}",
+   "\\text{No solution}",
+   "x=0",
+   "x=1"
+  ],
+  "correct": 0
+ },
+ {
   "id": "ineq-1",
   "topic": "Inequalities",
   "level": 1,
